@@ -1,12 +1,15 @@
 // contain all objects of the game, in each frame update and draw them on canvas
 
 let ballPools = [];
+let car = null;
 
 function GameWorld() {
 
 }
 
-GameWorld.prototype.start = function(){
+GameWorld.prototype.start = function () {
+
+  car = new Car(sprites.car);
 
   ballPools.push(
     new Ball(
@@ -37,6 +40,7 @@ GameWorld.prototype.start = function(){
 GameWorld.prototype.update = function () {
   input.update();
 
+  car.update();
   // Update all Balls
   ballPools.forEach(function (ball) { ball.update(); });
 
@@ -45,7 +49,9 @@ GameWorld.prototype.update = function () {
 
 GameWorld.prototype.draw = function () {
 
-  Canvas.drawImage(sprites.background, { x: 0, y: 0 }, 0,1,{ x: 0, y: 0 });
+  Canvas.drawImage(sprites.background, { x: 0, y: 0 }, 0, 1, { x: 0, y: 0 });
+
+  car.draw();
 
   // Draw all Balls
   ballPools.forEach(function (ball) { ball.draw(); });

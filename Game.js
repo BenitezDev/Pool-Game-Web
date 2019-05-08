@@ -14,9 +14,9 @@ Game.prototype.start = function () {
     PoolGame.SetupInput();
     PoolGame.PreparePhysics();
     PoolGame.CreateLimits();
-    
+
     PoolGame.gameWorld.start();
-    
+
     //CreateBox(PoolGame.world, 5, 5, 2, 2, { type: b2Body.b2_staticBody });
     // CreateSphere(world, 7.9, 4.75, 1.3, { type: b2Body.b2_staticBody });
     PoolGame.mainLoop();
@@ -51,7 +51,7 @@ Game.prototype.SetupInput = function () {
 
 Game.prototype.PreparePhysics = function () {
     // gravity vector
-    let gravity = new b2Vec2(10,10);
+    let gravity = new b2Vec2();
 
     PoolGame.world = CreateWorld(Canvas._ctx, gravity);
 }

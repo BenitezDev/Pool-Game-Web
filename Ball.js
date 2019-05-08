@@ -1,5 +1,5 @@
 
-function Ball(img, pos, ori, radius,scale) {
+function Ball(img, pos, ori, radius, scale) {
     if (!pos) pos = new Vector2();
     this.position = pos;
 
@@ -28,7 +28,7 @@ function Ball(img, pos, ori, radius,scale) {
     this.fix_def.restitution = defaultOptions.restitution;
 
     // Shape: 2d geometry (circle or polygon)
-    this.fix_def.shape = new b2CircleShape(radius*this.scale);
+    this.fix_def.shape = new b2CircleShape(radius * this.scale);
 
     // Body: position of the object and its type (dynamic, static o kinetic)
     this.body_def = new b2BodyDef();
@@ -63,12 +63,11 @@ Ball.prototype.update = function () {
     this.position.x = this.fixture.GetBody().GetPosition().x;
     this.position.y = this.fixture.GetBody().GetPosition().y;
     this.angle = this.fixture.GetBody().GetAngle();
-    console.log(this.angle);
 
     //this.body_def.position.Set(this.position.x, this.position.y);
 }
 
 
 Ball.prototype.draw = function () {
-    Canvas.drawImage(this.img, this.position, this.angle, this.scale,this.origin);
+    Canvas.drawImage(this.img, this.position, this.angle, this.scale, this.origin);
 }
