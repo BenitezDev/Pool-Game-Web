@@ -6,6 +6,7 @@ function Game() {
 
 Game.prototype.init = function () {
     this.gameWorld = new GameWorld();
+    
 }
 
 
@@ -14,10 +15,11 @@ Game.prototype.start = function () {
     PoolGame.SetupInput();
     PoolGame.PreparePhysics();
     PoolGame.CreateLimits();
-
-
-    //CreateBox(world, 5, 5, 2, 2, { type: b2Body.b2_staticBody });
-
+    
+    PoolGame.gameWorld.start();
+    
+    //CreateBox(PoolGame.world, 5, 5, 2, 2, { type: b2Body.b2_staticBody });
+    // CreateSphere(world, 7.9, 4.75, 1.3, { type: b2Body.b2_staticBody });
     PoolGame.mainLoop();
 }
 
@@ -52,15 +54,15 @@ Game.prototype.PreparePhysics = function () {
     // gravity vector
     let gravity = new b2Vec2();
 
-    this.world = CreateWorld(Canvas._ctx, gravity);
+    PoolGame.world = CreateWorld(Canvas._ctx, gravity);
 }
 
 Game.prototype.CreateLimits = function () {
     this.limits = [
         // left
-        CreateBox(this.world, 0, 4.8, 0.75, 3.5, { type: b2Body.b2_staticBody }),
+        CreateBox(this.world, 0, 240, 40, 180, { type: b2Body.b2_staticBody }),
         // right
-        CreateBox(this.world, 16, 4.8, 0.75, 3.5, { type: b2Body.b2_staticBody }),
+        CreateBox(this.world, 800, 240, 40, 180, { type: b2Body.b2_staticBody }),
         // up left
         CreateBox(this.world, 4.4, 0, 3, 0.75, { type: b2Body.b2_staticBody }),
         // up right

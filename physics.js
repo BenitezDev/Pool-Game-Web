@@ -17,9 +17,8 @@ var b2Vec2 = Box2D.Common.Math.b2Vec2,
   b2DistanceJointDef = Box2D.Dynamics.Joints.b2DistanceJointDef,
   b2PulleyJointDef = Box2D.Dynamics.Joints.b2PulleyJointDef;
 
-var scale = 50; // 1 metro = 50 pixels
+var scale = 1; // 1 metro = 100 pixels
 var gravity;
-var world;
 var floorBody;
 var leftWall, rightWall, topWall;
 
@@ -67,25 +66,14 @@ function CreateBox(world, x, y, width, height, options) {
 
 
 // aux function for creating boxes
-function CreateSphere(world, x, y, radius, options) {
-  let defaultOptions = {
-    density: 1.0,
-    friction: 1.0,
-    restitution: 0.5,
-
-    linearDamping: 0.0,
-    angularDamping: 0.0,
-
-    type: b2Body.b2_dynamicBody
-  };
-  options = Object.assign(defaultOptions, options);
-
+function CreateSphere(world, x, y, radius, physicsSettings) {
+ 
   // Fixture: define physics propierties (density, friction, restitution)
   let fix_def = new b2FixtureDef();
 
-  fix_def.density = options.density;
-  fix_def.friction = options.friction;
-  fix_def.restitution = options.restitution;
+  fix_def.density = physicsSettings.density;
+  fix_def.friction = physicsSettings.friction;
+  fix_def.restitution = physicsSettings.restitution;
 
   // Shape: 2d geometry (circle or polygon)
   fix_def.shape = new b2CircleShape(radius);
@@ -94,16 +82,16 @@ function CreateSphere(world, x, y, radius, options) {
   //fix_def.shape.setas(width, height);
 
   // Body: position of the object and its type (dynamic, static o kinetic)
-  let body_def = new b2BodyDef();
-  body_def.position.Set(x, y);
+  this.body_def = new b2BodyDef();
+  this.body_def.position.Set(x, y);
 
-  body_def.linearDamping = options.linearDamping;
-  body_def.angularDamping = options.angularDamping;
+  this.body_def.linearDamping = physicsSettings.linearDamping;
+  this.body_def.angularDamping = physicsSettings.angularDamping;
 
-  body_def.type = options.type; // b2_dynamicBody
-  body_def.userData = options.user_data;
+  this.body_def.type = physicsSettings.type; // b2_dynamicBody
+  this.body_def.userData = physicsSettings.user_data;
 
-  let b = world.CreateBody(body_def);
+  let b = world.CreateBody(this.body_def);
   let f = b.CreateFixture(fix_def);
 
   return b;

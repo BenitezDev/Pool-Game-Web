@@ -3,8 +3,11 @@
 let ballPools = [];
 
 function GameWorld() {
-  // Balls:
-  //this.ball_1 = new Ball();
+
+}
+
+GameWorld.prototype.start = function(){
+
   ballPools.push(
     new Ball(
       sprites.ball_1,
