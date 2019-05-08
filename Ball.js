@@ -1,5 +1,5 @@
 
-function Ball(img, pos, ori) {
+function Ball(img, pos, ori, radius) {
     if (!pos) pos = new Vector2();
     this.position = pos;
 
@@ -7,6 +7,9 @@ function Ball(img, pos, ori) {
     this.origin = ori;
 
     this.img = img;
+
+    //this.collider = CreateSphere(7.9, 4.75, radius, { type: b2Body.b2_staticBody });
+    //this.collider = CreateBox(Game.prototype.world, 0, 4.8, 0.75, 3.5, { type: b2Body.b2_staticBody });
 }
 
 Ball.prototype.update = function () {
