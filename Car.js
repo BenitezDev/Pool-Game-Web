@@ -13,19 +13,21 @@ function Car(img) {
     this.maxSpeed = 300000;
     this.engineOn = false;
     this.gear = 1; // marcha (1: hacia adelante, -1: hacia atrás)
-    this.wheelRotationSpeed = 300000;
-    this.wheelRelocationSpeed = 4.0; // velocidad con la que las ruedas se resituan en reposo
+    this.wheelRotationSpeed = 999999999;
+    this.wheelRelocationSpeed = 3000; // velocidad con la que las ruedas se resituan en reposo
 
-    // Wheels
-    this.frontWheels = [
-        this.frontLeftWheel = null,
-        this.frontRightWheel = null
-    ];
-    this.rearWheels = [
-        this.rearLeftWheel = null,
-        this.rearRightWheel = null
-    ];
+    // Front Wheels
+    this.frontLeftWheel = null;
+    this.frontRightWheel = null;
+    // Rear Wheels
+    this.rearLeftWheel = null;
+    this.rearRightWheel = null;
 
+    // Wheels packs
+    this.frontWheels = [];
+    this.rearWheels = [];
+
+    // Joints
     this.frontJoint = null;
     this.rearJoint = null;
 
@@ -44,27 +46,24 @@ Car.prototype.start = function () {
 
         type: b2Body.b2_dynamicBody
     };
+
+    // Chasis
     this.body = CreateBox(PoolGame.world, this.position.x, this.position.y, 65, 30, defaultOptions);
-    // Physics properties
 
+    // Wheels
+    this.frontLeftWheel = CreateBox(PoolGame.world, this.position.x + 30, this.position.y - 35, 20, 5, {});
+    this.frontRightWheel = CreateBox(PoolGame.world, this.position.x + 30, this.position.y + 35, 20, 5, {});
 
-    // Fixture: define physics propierties (density, friction, restitution)
-    this.fix_def = new b2FixtureDef();
-    this.fix_def.density = defaultOptions.density;
-    this.fix_def.friction = defaultOptions.friction;
-    this.fix_def.restitution = defaultOptions.restitution;
+    this.rearLeftWheel = CreateBox(PoolGame.world, this.position.x - 30, this.position.y - 35, 20, 5, {});
+    this.rearRightWheel = CreateBox(PoolGame.world, this.position.x - 30, this.position.y + 35, 20, 5, {});
 
-    // Shape: 2d geometry (circle or polygon)
-    this.fix_def.shape = new b2PolygonShape();
-    // ruedas delanteras
-    this.frontWheels[0] = CreateBox(PoolGame.world, this.position.x + 30, this.position.y - 35, 20, 5, {});
-    this.frontWheels[1] = CreateBox(PoolGame.world, this.position.x + 30, this.position.y + 35, 20, 5, {});
+    this.frontWheels.push(this.frontLeftWheel);
+    this.frontWheels.push(this.frontRightWheel);
 
-    // ruedas traseras
-    this.rearWheels[0] = CreateBox(PoolGame.world, this.position.x - 30, this.position.y - 35, 20, 5, {});
-    this.rearWheels[1] = CreateBox(PoolGame.world, this.position.x - 30, this.position.y + 35, 20, 5, {});
+    this.rearWheels.push(this.rearLeftWheel);
+    this.rearWheels.push(this.rearRightWheel);
 
-    // inicializar ruedas delanteras
+    // Inicializar ruedas delanteras
     for (let i in this.frontWheels) {
         let wheel = this.frontWheels[i];
         let jointDef = new b2RevoluteJointDef();
@@ -73,19 +72,17 @@ Car.prototype.start = function () {
         jointDef.lowerAngle = -Math.PI / 3; // -60 degrees
         jointDef.upperAngle = Math.PI / 3; // 60 degrees
         jointDef.enableLimit = true;
-        jointDef.maxMotorTorque = 10.0;
+        jointDef.maxMotorTorque = 30000.0;
         jointDef.enableMotor = true;
         this.frontWheels[i].joint = world.CreateJoint(jointDef);
     }
+
     // inicializar ruedas traseras
     for (let i in this.rearWheels) {
         let jointDef = new b2PrismaticJointDef();
         jointDef.Initialize(this.body, this.rearWheels[i], this.rearWheels[i].GetWorldCenter(),
             new b2Vec2(1, 0));
         jointDef.enableLimit = true;
-
-        // car.rearWheels.frontXWheel.joint
-        // rearJoint = world.CreateJoint(jointDef);
         this.rearWheels[i].joint = world.CreateJoint(jointDef);
     }
 }
@@ -93,23 +90,22 @@ Car.prototype.start = function () {
 Car.prototype.update = function () {
     //this.angle = this.fixture.GetBody().GetAngle();
 
-    console.log(this.speed);
     // Cálculo del giro
     let wheelRotationSpeed = 0.0;
     let wheelAngle = 0.0;
 
     if (input.isKeyPressed(KEY_LEFT)) {
-        wheelAngle += this.frontWheels[0].joint.m_upperAngle;
-        wheelRotationSpeed = this.wheelRotationSpeed;
+        wheelAngle += this.frontLeftWheel.joint.m_upperAngle;
+        wheelRotationSpeed = wheelRotationSpeed;
     }
     if (input.isKeyPressed(KEY_RIGHT)) {
-        wheelAngle += this.frontWheels[0].joint.m_lowerAngle;
-        wheelRotationSpeed = this.wheelRotationSpeed;
+        wheelAngle += this.frontLeftWheel.joint.m_lowerAngle;
+        wheelRotationSpeed = wheelRotationSpeed;
     }
 
     if (!(input.isKeyPressed(KEY_LEFT) || input.isKeyPressed(KEY_RIGHT))) {
         wheelAngle = 0.0;
-        wheelRotationSpeed = this.wheelRotationSpeed * this.wheelRelocationSpeed;
+        wheelRotationSpeed = wheelRotationSpeed * this.wheelRelocationSpeed;
     }
 
     // Aplicación del giro
@@ -134,7 +130,7 @@ Car.prototype.update = function () {
 
 
     // Aplicación del giro
-    for (let i in car.frontWheels) {
+    for (let i in this.frontWheels) {
         let wheelJoint = this.frontWheels[i].joint;
         let angleDiff = wheelAngle - wheelJoint.GetJointAngle();
         wheelJoint.SetMotorSpeed(angleDiff * wheelRotationSpeed);
@@ -142,7 +138,6 @@ Car.prototype.update = function () {
 
     // Aplicación del movimiento de avance
     for (let i in this.rearWheels) {
-
         var direction = this.rearWheels[i].GetTransform().R.col2.Copy();
         direction.Multiply(this.speed);
         this.rearWheels[i].ApplyForce(direction, this.rearWheels[i].GetPosition());

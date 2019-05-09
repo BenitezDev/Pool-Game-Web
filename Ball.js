@@ -11,12 +11,12 @@ function Ball(img, pos, ori, radius, scale) {
 
     // Physics properties
     let defaultOptions = {
-        density: 1.0,
+        density: 1,
         friction: 1.0,
         restitution: 0.5,
 
-        linearDamping: 0.0,
-        angularDamping: 0.0,
+        linearDamping: 0.05,
+        angularDamping: 0.05,
 
         type: b2Body.b2_dynamicBody
     };
@@ -45,8 +45,6 @@ function Ball(img, pos, ori, radius, scale) {
     this.fixture = this.collider.CreateFixture(this.fix_def);
 
     this.angle = this.fixture.GetBody().GetAngle();
-    // this.collider = CreateSphere(PoolGame.world, 7.9, 4.75, 1.3, this.defaultOptions);
-
 }
 
 
