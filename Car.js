@@ -3,18 +3,20 @@
 
 function Car(img) {
     this.img = img;
-    this.scale = 0.4;
+    this.wheelImg = sprites.wheel;
+    this.scale = 0.25;
     this.angle = 0;
-    this.position = { x: 150, y: 100 };
+    this.position = { x: 150, y: 200 };
+
 
     // Car Physics
     this.body = null; // aquí guardaremos la referencia al cuerpo físico del coche
     this.speed = 0.0;
     this.maxSpeed = 300000;
     this.engineOn = false;
-    this.gear = 1; // marcha (1: hacia adelante, -1: hacia atrás)
-    this.wheelRotationSpeed = 999999999;
-    this.wheelRelocationSpeed = 3000; // velocidad con la que las ruedas se resituan en reposo
+    this.gear = 1; // marcha (-1: hacia adelante, 1: hacia atrás)
+    this.wheelRotationSpeed = 2;
+    this.wheelRelocationSpeed = 0.3; // velocidad con la que las ruedas se resituan en reposo
 
     // Front Wheels
     this.frontLeftWheel = null;
@@ -48,14 +50,14 @@ Car.prototype.start = function () {
     };
 
     // Chasis
-    this.body = CreateBox(PoolGame.world, this.position.x, this.position.y, 65, 30, defaultOptions);
+    this.body = CreateBox(PoolGame.world, this.position.x, this.position.y, 20, 60, defaultOptions);
 
     // Wheels
-    this.frontLeftWheel = CreateBox(PoolGame.world, this.position.x + 30, this.position.y - 35, 20, 5, {});
-    this.frontRightWheel = CreateBox(PoolGame.world, this.position.x + 30, this.position.y + 35, 20, 5, {});
+    this.frontLeftWheel = CreateBox(PoolGame.world, this.position.x - 30, this.position.y - 35, 4, 13, {});
+    this.frontRightWheel = CreateBox(PoolGame.world, this.position.x + 30, this.position.y - 35, 4, 13, {});
 
-    this.rearLeftWheel = CreateBox(PoolGame.world, this.position.x - 30, this.position.y - 35, 20, 5, {});
-    this.rearRightWheel = CreateBox(PoolGame.world, this.position.x - 30, this.position.y + 35, 20, 5, {});
+    this.rearLeftWheel = CreateBox(PoolGame.world, this.position.x - 30, this.position.y + 35, 4, 13, {});
+    this.rearRightWheel = CreateBox(PoolGame.world, this.position.x + 30, this.position.y + 35, 4, 13, {});
 
     this.frontWheels.push(this.frontLeftWheel);
     this.frontWheels.push(this.frontRightWheel);
@@ -95,17 +97,17 @@ Car.prototype.update = function () {
     let wheelAngle = 0.0;
 
     if (input.isKeyPressed(KEY_LEFT)) {
-        wheelAngle += this.frontLeftWheel.joint.m_upperAngle;
-        wheelRotationSpeed = wheelRotationSpeed;
+        wheelAngle += this.frontLeftWheel.joint.m_lowerAngle;
+        wheelRotationSpeed = this.wheelRotationSpeed;
     }
     if (input.isKeyPressed(KEY_RIGHT)) {
-        wheelAngle += this.frontLeftWheel.joint.m_lowerAngle;
-        wheelRotationSpeed = wheelRotationSpeed;
+        wheelAngle += this.frontLeftWheel.joint.m_upperAngle;
+        wheelRotationSpeed = this.wheelRotationSpeed;
     }
 
     if (!(input.isKeyPressed(KEY_LEFT) || input.isKeyPressed(KEY_RIGHT))) {
         wheelAngle = 0.0;
-        wheelRotationSpeed = wheelRotationSpeed * this.wheelRelocationSpeed;
+        wheelRotationSpeed = this.wheelRotationSpeed * this.wheelRelocationSpeed;
     }
 
     // Aplicación del giro
@@ -120,11 +122,11 @@ Car.prototype.update = function () {
         this.stopEngine();
     }
     if (input.isKeyPressed(KEY_UP)) {
-        this.gear = 1;
+        this.gear = -1;
         this.startEngine();
     }
     else if (input.isKeyPressed(KEY_DOWN)) {
-        this.gear = -1;
+        this.gear = +1;
         this.startEngine();
     }
 
@@ -142,6 +144,8 @@ Car.prototype.update = function () {
         direction.Multiply(this.speed);
         this.rearWheels[i].ApplyForce(direction, this.rearWheels[i].GetPosition());
     }
+
+
 }
 
 
