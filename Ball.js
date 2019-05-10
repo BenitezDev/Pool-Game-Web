@@ -60,5 +60,9 @@ Ball.prototype.update = function () {
 
 
 Ball.prototype.draw = function () {
-    Canvas.drawImage(this.img, this.position, this.angle, this.scale, this.origin);
+    Canvas.drawImage(this.img, this.position, this.angle, this.scale, this.origin); 
 }
+
+// Ball.prototype.destroyBall = function(){
+//     PoolGame.world.destroyBody(this.body)
+// }

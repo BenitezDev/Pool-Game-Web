@@ -40,12 +40,12 @@ GameWorld.prototype.start = function () {
   );
 
   // Holes
-  holes.push(new Hole({ x: 0, y: 0 }, 35));
-  holes.push(new Hole({ x: 400, y: 0 }, 12));
-  holes.push(new Hole({ x: 800, y: 0 }, 35));
-  holes.push(new Hole({ x: 0, y: 480 }, 35));
-  holes.push(new Hole({ x: 400, y: 480 }, 12));
-  holes.push(new Hole({ x: 800, y: 480 }, 35));
+  holes.push(new Hole({ x: 0, y: 0 }, 25));
+  holes.push(new Hole({ x: 400, y: 0 }, 5));
+  holes.push(new Hole({ x: 800, y: 0 }, 25));
+  holes.push(new Hole({ x: 0, y: 480 }, 25));
+  holes.push(new Hole({ x: 400, y: 480 }, 5));
+  holes.push(new Hole({ x: 800, y: 480 }, 25));
 
 }
 

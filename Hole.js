@@ -14,9 +14,11 @@ Hole.prototype.update = function (){
     
     // Check if balls are inside the hole
     ballPools.forEach(ball => { 
-        if(CheckCollisionBetweenCircles(this.position, this.radius, ball.position, ball.radius))
+        if(CheckCollisionBetweenCircles(this.position, this.radius, ball.position, ball.radius*ball.scale))
         {
             ballPools.splice(ballPools.indexOf(ball),1);
+            PoolGame.world.DestroyBody(ball.collider);
+           
         }
         
     });
