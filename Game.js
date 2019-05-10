@@ -51,7 +51,7 @@ Game.prototype.SetupInput = function () {
 
 Game.prototype.PreparePhysics = function () {
     // gravity vector
-    let gravity = new b2Vec2();
+    let gravity = new b2Vec2(1,1);
 
     PoolGame.world = CreateWorld(Canvas._ctx, gravity);
 }

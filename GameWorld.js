@@ -2,6 +2,8 @@
 
 let ballPools = [];
 let car = null;
+let holes = [];
+
 
 function GameWorld() {
 
@@ -14,11 +16,12 @@ GameWorld.prototype.start = function () {
   ballPools.push(
     new Ball(
       sprites.ball_1,
-      { x: 400, y: 240 },
+      { x: 110, y: 110 },
       { x: sprites.ball_1.width / 2, y: sprites.ball_1.height / 2 },
       68,
       0.3)
   );
+  console.log(ballPools[0]);
   ballPools.push(
     new Ball(
       sprites.ball_2,
@@ -35,6 +38,15 @@ GameWorld.prototype.start = function () {
       68,
       0.3)
   );
+
+  // Holes
+  holes.push(new Hole({ x: 0, y: 0 }, 35));
+  holes.push(new Hole({ x: 400, y: 0 }, 12));
+  holes.push(new Hole({ x: 800, y: 0 }, 35));
+  holes.push(new Hole({ x: 0, y: 480 }, 35));
+  holes.push(new Hole({ x: 400, y: 480 }, 12));
+  holes.push(new Hole({ x: 800, y: 480 }, 35));
+
 }
 
 GameWorld.prototype.update = function () {
@@ -43,6 +55,9 @@ GameWorld.prototype.update = function () {
   car.update();
   // Update all Balls
   ballPools.forEach(function (ball) { ball.update(); });
+
+  // Update holes
+  holes.forEach(function (hole) { hole.update(); })
 
   input.postUpdate();
 };
@@ -56,6 +71,11 @@ GameWorld.prototype.draw = function () {
   // Draw all Balls
   ballPools.forEach(function (ball) { ball.draw(); });
 
+  // Holes
+  holes.forEach(function (hole) { hole.draw(); });
+
   // Box2d Debug
   world.DrawDebugData();
+
+
 };

@@ -111,6 +111,5 @@ function CreateWorld(ctx, gravity) {
   debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
 
   world.SetDebugDraw(debugDraw);
-  console.log(world);
   return world;
 }

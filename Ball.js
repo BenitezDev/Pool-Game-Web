@@ -5,6 +5,7 @@ function Ball(img, pos, ori, radius, scale) {
 
     if (!ori) ori = new Vector2();
     this.origin = ori;
+    this.radius = radius;
 
     this.img = img;
     this.scale = scale;
@@ -49,19 +50,11 @@ function Ball(img, pos, ori, radius, scale) {
 
 
 Ball.prototype.update = function () {
-    // TESTING
-    // console.log(this.fixture.GetBody().GetPosition().x);
-
-    if (input.isKeyPressed(KEY_LEFT))
-        this.position.x--;
-
-    if (input.isKeyPressed(KEY_RIGHT))
-        this.position.x++;
-
+   
     this.position.x = this.fixture.GetBody().GetPosition().x;
     this.position.y = this.fixture.GetBody().GetPosition().y;
     this.angle = this.fixture.GetBody().GetAngle();
-
+    
     //this.body_def.position.Set(this.position.x, this.position.y);
 }
 
