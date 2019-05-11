@@ -1,4 +1,5 @@
 
+
 function Game() {
 
 }
@@ -10,22 +11,25 @@ Game.prototype.init = function () {
 
 
 Game.prototype.start = function () {
+
     PoolGame.init();
+
     PoolGame.SetupInput();
     PoolGame.PreparePhysics();
     PoolGame.CreateLimits();
 
     PoolGame.gameWorld.start();
 
-    //CreateBox(PoolGame.world, 5, 5, 2, 2, { type: b2Body.b2_staticBody });
-    // CreateSphere(world, 7.9, 4.75, 1.3, { type: b2Body.b2_staticBody });
     PoolGame.mainLoop();
+
 }
 
 
 Game.prototype.mainLoop = function () {
+
     Canvas.clear();
 
+    // TODO: Calculate a better deltatime
     PoolGame.world.Step(0.16, 8, 3);
     PoolGame.world.ClearForces();
 
@@ -36,27 +40,30 @@ Game.prototype.mainLoop = function () {
 }
 
 
-
 let PoolGame = new Game();
 
 
-
 Game.prototype.SetupInput = function () {
+
     // setup keyboard events
     SetupKeyboardEvents();
 
     // setup mouse events
     SetupMouseEvents();
+
 }
 
 Game.prototype.PreparePhysics = function () {
-    // gravity vector
-    let gravity = new b2Vec2(1,-1);
+
+    // zero gravity (0,0)
+    let gravity = new b2Vec2();
 
     PoolGame.world = CreateWorld(Canvas._ctx, gravity);
+
 }
 
 Game.prototype.CreateLimits = function () {
+
     this.limits = [
         // left
         CreateBox(this.world, 0, 240, 40, 165, { type: b2Body.b2_staticBody }),
@@ -71,4 +78,5 @@ Game.prototype.CreateLimits = function () {
         // right down
         CreateBox(this.world, 583, 480, 150, 40, { type: b2Body.b2_staticBody }),
     ];
+
 }

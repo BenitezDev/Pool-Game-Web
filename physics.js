@@ -17,13 +17,11 @@ var b2Vec2 = Box2D.Common.Math.b2Vec2,
   b2DistanceJointDef = Box2D.Dynamics.Joints.b2DistanceJointDef,
   b2PulleyJointDef = Box2D.Dynamics.Joints.b2PulleyJointDef;
 
-var scale = 1; // 1 metro = 100 pixels
-var gravity;
-var floorBody;
-var leftWall, rightWall, topWall;
+var scale = 1;
 
-// aux function for creating boxes
+// Aux function for creating boxes
 function CreateBox(world, x, y, width, height, options) {
+
   let defaultOptions = {
     density: 1.0,
     friction: 1.0,
@@ -34,6 +32,7 @@ function CreateBox(world, x, y, width, height, options) {
 
     type: b2Body.b2_dynamicBody
   };
+
   options = Object.assign(defaultOptions, options);
 
   // Fixture: define physics propierties (density, friction, restitution)
@@ -43,7 +42,7 @@ function CreateBox(world, x, y, width, height, options) {
   fix_def.friction = options.friction;
   fix_def.restitution = options.restitution;
 
-  // Shape: 2d geometry (circle or polygon)
+  // Shape: 2d geometry 
   fix_def.shape = new b2PolygonShape();
 
   fix_def.shape.SetAsBox(width, height);
@@ -55,19 +54,20 @@ function CreateBox(world, x, y, width, height, options) {
   body_def.linearDamping = options.linearDamping;
   body_def.angularDamping = options.angularDamping;
 
-  body_def.type = options.type; // b2_dynamicBody
+  body_def.type = options.type; // type: b2_dynamicBody
   body_def.userData = options.user_data;
 
   let b = world.CreateBody(body_def);
   let f = b.CreateFixture(fix_def);
 
   return b;
+
 }
 
 
 // aux function for creating boxes
 function CreateSphere(world, x, y, radius, physicsSettings) {
- 
+
   // Fixture: define physics propierties (density, friction, restitution)
   let fix_def = new b2FixtureDef();
 
@@ -95,10 +95,12 @@ function CreateSphere(world, x, y, radius, physicsSettings) {
   let f = b.CreateFixture(fix_def);
 
   return b;
+
 }
 
 // Create a Box2D world object
 function CreateWorld(ctx, gravity) {
+
   let doSleep = true;
   world = new b2World(gravity, doSleep);
 
@@ -106,10 +108,11 @@ function CreateWorld(ctx, gravity) {
   let debugDraw = new b2DebugDraw();
   debugDraw.SetSprite(ctx);
   debugDraw.SetDrawScale(scale);
-  debugDraw.SetFillAlpha(0.5);
+  debugDraw.SetFillAlpha(0.3);
   debugDraw.SetLineThickness(1.0);
   debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
 
   world.SetDebugDraw(debugDraw);
   return world;
+
 }

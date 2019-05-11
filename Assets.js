@@ -1,19 +1,23 @@
+// Load all the assets before starting starting the game
+
 var sprites = {};
 var assetsStillLoading = 0;
 
 function assetsLoadingLoop(callback) {
+
     if (assetsStillLoading) {
         requestAnimationFrame(assetsLoadingLoop.bind(this, callback));
     }
     else {
         callback();
     }
-}
 
+}
 
 function loadAssets(callback) {
 
     function loadSprite(fileName) {
+
         assetsStillLoading++;
 
         let spriteImage = new Image();
@@ -24,10 +28,12 @@ function loadAssets(callback) {
         }
 
         return spriteImage;
+
     }
 
     sprites.background = loadSprite('background.png');
     sprites.car = loadSprite('car_1.png');
+    sprites.car_2 = loadSprite('car_2.png');
     sprites.wheel = loadSprite('wheel.png')
     sprites.ball_1 = loadSprite('ball_1.png');
     sprites.ball_2 = loadSprite('ball_2.png');

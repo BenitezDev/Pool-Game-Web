@@ -1,10 +1,13 @@
 
+
 function Ball(img, pos, ori, radius, scale) {
+
     if (!pos) pos = new Vector2();
     this.position = pos;
 
     if (!ori) ori = new Vector2();
     this.origin = ori;
+
     this.radius = radius;
 
     this.img = img;
@@ -28,7 +31,7 @@ function Ball(img, pos, ori, radius, scale) {
     this.fix_def.friction = defaultOptions.friction;
     this.fix_def.restitution = defaultOptions.restitution;
 
-    // Shape: 2d geometry (circle or polygon)
+    // Shape: 2d geometry
     this.fix_def.shape = new b2CircleShape(radius * this.scale);
 
     // Body: position of the object and its type (dynamic, static o kinetic)
@@ -38,31 +41,26 @@ function Ball(img, pos, ori, radius, scale) {
     this.body_def.linearDamping = defaultOptions.linearDamping;
     this.body_def.angularDamping = defaultOptions.angularDamping;
 
-    this.body_def.type = defaultOptions.type; // b2_dynamicBody
+    this.body_def.type = defaultOptions.type; // type: b2_dynamicBody
     this.body_def.userData = defaultOptions.user_data;
 
     this.collider = PoolGame.world.CreateBody(this.body_def);
-
     this.fixture = this.collider.CreateFixture(this.fix_def);
 
-    this.angle = this.fixture.GetBody().GetAngle();
 }
 
 
 Ball.prototype.update = function () {
-   
+
     this.position.x = this.fixture.GetBody().GetPosition().x;
     this.position.y = this.fixture.GetBody().GetPosition().y;
     this.angle = this.fixture.GetBody().GetAngle();
-    
-    //this.body_def.position.Set(this.position.x, this.position.y);
+
 }
 
 
 Ball.prototype.draw = function () {
-    Canvas.drawImage(this.img, this.position, this.angle, this.scale, this.origin); 
-}
 
-// Ball.prototype.destroyBall = function(){
-//     PoolGame.world.destroyBody(this.body)
-// }
+    Canvas.drawImage(this.img, this.position, this.angle, this.scale, this.origin);
+
+}

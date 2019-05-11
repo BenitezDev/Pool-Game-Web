@@ -1,10 +1,10 @@
 // key events
 var lastPress = null;
 
-const KEY_LEFT  = 37, KEY_A = 65;
-const KEY_UP    = 38, KEY_W = 87;
+const KEY_LEFT = 37, KEY_A = 65;
+const KEY_UP = 38, KEY_W = 87;
 const KEY_RIGHT = 39, KEY_D = 68;
-const KEY_DOWN  = 40, KEY_S = 83;
+const KEY_DOWN = 40, KEY_S = 83;
 const KEY_PAUSE = 19;
 const KEY_SPACE = 32;
 const KEY_SCAPE = 27;
@@ -22,6 +22,7 @@ const KEY_8 = 56;
 const KEY_9 = 57;
 
 var input = {
+
     mouse: {
         x: 0,
         y: 0,
@@ -31,10 +32,10 @@ var input = {
         keyup: {},
         keypressed: {}
     },
-    isKeyPressed: function(keycode) {
+    isKeyPressed: function (keycode) {
         return this.keyboard[keycode];
     },
-    isKeyDown: function(keycode) {
+    isKeyDown: function (keycode) {
         return this.keyboard.keypressed[keycode];
     },
     isKeyUp: function (keycode) {
@@ -43,7 +44,7 @@ var input = {
     isMousePressed: function () {
         return this.mouse.pressed;
     },
-    update: function() {
+    update: function () {
         for (var property in this.keyboard.keyup) {
             if (this.keyboard.keyup.hasOwnProperty(property)) {
                 this.keyboard.keyup[property] = false;
@@ -59,41 +60,41 @@ var input = {
     }
 };
 
-function SetupKeyboardEvents ()
-{
+function SetupKeyboardEvents() {
+
     AddEvent(document, "keydown", function (e) {
         console.log(e.keyCode);
         input.keyboard[e.keyCode] = true;
         input.keyboard.keypressed[e.keyCode] = true;
-    } );
+    });
 
     AddEvent(document, "keyup", function (e) {
         input.keyboard.keyup[e.keyCode] = true;
         input.keyboard[e.keyCode] = false;
-    } );
+    });
 
-    function AddEvent (element, eventName, func)
-    {
+    function AddEvent(element, eventName, func) {
         if (element.addEventListener)
             element.addEventListener(eventName, func, false);
         else if (element.attachEvent)
             element.attachEvent(eventName, func);
     }
+
 }
 
-function SetupMouseEvents ()
-{
-    
+function SetupMouseEvents() {
+
     // mouse click event
     Canvas._canvas.addEventListener("mousedown", MouseDown, false);
     // mouse move event
     Canvas._canvas.addEventListener("mousemove", MouseMove, false);
     // mouse up event
     Canvas._canvas.addEventListener("mouseup", MouseUp, false);
+
 }
 
-function MouseDown (event)
-{
+function MouseDown(event) {
+
     var rect = Canvas._canvas.getBoundingClientRect();
     var clickX = event.clientX - rect.left;
     var clickY = event.clientY - rect.top;
@@ -101,10 +102,11 @@ function MouseDown (event)
     input.mouse.pressed = true;
 
     console.log("MouseDown: " + "X=" + clickX + ", Y=" + clickY);
+
 }
 
-function MouseUp (event)
-{
+function MouseUp(event) {
+
     var rect = Canvas._canvas.getBoundingClientRect();
     var clickX = event.clientX - rect.left;
     var clickY = event.clientY - rect.top;
@@ -112,12 +114,13 @@ function MouseUp (event)
     input.mouse.pressed = false;
 
     console.log("MouseUp: " + "X=" + clickX + ", Y=" + clickY);
+
 }
 
-function MouseMove (event)
-{
+function MouseMove(event) {
+
     var rect = Canvas._canvas.getBoundingClientRect();
     input.mouse.x = event.clientX - rect.left;
     input.mouse.y = event.clientY - rect.top;
-    //console.log(input.mouse);
+
 }
