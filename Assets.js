@@ -40,6 +40,8 @@ function loadAssets(callback) {
     sprites.ball_1 = loadSprite('ball_1.png');
     sprites.ball_2 = loadSprite('ball_2.png');
     sprites.ball_3 = loadSprite('ball_3.png');
+    sprites.start_game = loadSprite('start_game.png');
+    sprites.options = loadSprite('options.png');
     assetsLoadingLoop(callback);
 
 }

@@ -23,11 +23,8 @@ function Game() {
 
 Game.prototype.init = function () {
 
-
     PoolGame.scenes.push(new MenuScene());
     PoolGame.scenes.push(new GameScene());
-
-
 
 }
 

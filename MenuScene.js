@@ -4,10 +4,30 @@
 
 
 
-function MenuScene(active) {
-    this.foo = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+function MenuScene() {
 
-    this.wat = 1029312093;
+
+    // PoolGame.ChangeSceneTo(scenesTAGs.GAME)
+    this.startButton =
+        new Button(
+            new Vector2(Canvas._canvas.width / 2, Canvas._canvas.height / 2),
+            sprites.start_game,
+            sprites.start_game.width,
+            sprites.start_game.height,
+            //function () { console.log("algo") }
+        );
+    //this.startButton.onCLick = 
+
+    this.optionsButton =
+        new Button(
+            new Vector2(
+                Canvas._canvas.width / 2, (Canvas._canvas.height / 2) + 80),
+            sprites.options,
+            sprites.options.width,
+            sprites.options.height,
+            //function () { console.log("nada") }
+        );
+
 }
 
 MenuScene.prototype.start = function () {
@@ -17,20 +37,20 @@ MenuScene.prototype.start = function () {
 
 MenuScene.prototype.update = function () {
 
-
+    this.startButton.update();
+    this.optionsButton.update();
 };
 
 
 MenuScene.prototype.draw = function () {
 
-
-    Canvas.drawText("INTROOOO", { x: 200, y: 240 }, "100px", 'pink');
+    this.startButton.draw();
+    this.optionsButton.draw();
 
 };
 
-MenuScene.prototype.unloadScene = function () {
 
-    delete this.foo;
-    delete this.wat;
+
+MenuScene.prototype.unloadScene = function () {
 
 }
