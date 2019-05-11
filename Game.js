@@ -1,12 +1,34 @@
 
 
+
+const scenesTAGs = {
+    INTRO: 0,
+    GAME: 1,
+    // mainMENU: 1,
+    // GAME: 2,
+    // CREDITS: 3
+}
+
+let currentScene = null;
+
+let PoolGame = new Game();
+
 function Game() {
+
+    this.scenes = [];
+    this.activeScene = scenesTAGs.INTRO;
 
 }
 
 
 Game.prototype.init = function () {
-    this.gameWorld = new GameWorld();
+
+
+    PoolGame.scenes.push(new MenuScene());
+    PoolGame.scenes.push(new GameScene());
+
+
+
 }
 
 
@@ -15,10 +37,14 @@ Game.prototype.start = function () {
     PoolGame.init();
 
     PoolGame.SetupInput();
-    PoolGame.PreparePhysics();
-    PoolGame.CreateLimits();
+    //PoolGame.PreparePhysics();
 
-    PoolGame.gameWorld.start();
+    PoolGame.CreateFPSmanager();
+
+    currentScene = PoolGame.scenes[PoolGame.activeScene];
+
+    PoolGame.scenes[PoolGame.activeScene].start();
+
 
     PoolGame.mainLoop();
 
@@ -29,18 +55,37 @@ Game.prototype.mainLoop = function () {
 
     Canvas.clear();
 
-    // TODO: Calculate a better deltatime
-    PoolGame.world.Step(0.16, 8, 3);
-    PoolGame.world.ClearForces();
+    // Fps
+    PoolGame.fpsManager.computeFPS();
 
-    PoolGame.gameWorld.update();
-    PoolGame.gameWorld.draw();
+    // Physics
+    if (PoolGame.world) {
+        PoolGame.world.Step(0.16, 8, 3);
+        PoolGame.world.ClearForces();
+    }
 
-    requestAnimationFrame(PoolGame.mainLoop);
+    input.update();
+
+    // Current Scene
+    currentScene.update();
+    currentScene.draw();
+
+    if (input.isKeyPressed(KEY_1)) PoolGame.ChangeSceneTo(scenesTAGs.INTRO);
+    if (input.isKeyPressed(KEY_2)) PoolGame.ChangeSceneTo(scenesTAGs.GAME);
+
+    // Debug
+    if (PoolGame.world) PoolGame.world.DrawDebugData();     // Visual Debug Physics
+    PoolGame.fpsManager.draw('pink'); // FPS Stats
+
+    PoolGame.postUpdate();
+
+    requestAnimationFrame(PoolGame.mainLoop, targetDT);
+
 }
 
-
-let PoolGame = new Game();
+Game.prototype.postUpdate = function () {
+    input.postUpdate();
+}
 
 
 Game.prototype.SetupInput = function () {
@@ -62,21 +107,25 @@ Game.prototype.PreparePhysics = function () {
 
 }
 
-Game.prototype.CreateLimits = function () {
+Game.prototype.CreateFPSmanager = function () {
 
-    this.limits = [
-        // left
-        CreateBox(this.world, 0, 240, 40, 165, { type: b2Body.b2_staticBody }),
-        // right
-        CreateBox(this.world, 800, 240, 40, 165, { type: b2Body.b2_staticBody }),
-        // left up
-        CreateBox(this.world, 220, 0, 150, 40, { type: b2Body.b2_staticBody }),
-        // left down
-        CreateBox(this.world, 220, 480, 150, 40, { type: b2Body.b2_staticBody }),
-        // right up
-        CreateBox(this.world, 583, 0, 150, 40, { type: b2Body.b2_staticBody }),
-        // right down
-        CreateBox(this.world, 583, 480, 150, 40, { type: b2Body.b2_staticBody }),
-    ];
+    // FPS
+    this.fpsManager = new fps();
+
+}
+
+Game.prototype.ChangeSceneTo = function (newScene) {
+
+    if (newScene == PoolGame.activeScene) return;
+
+    if (PoolGame.world)
+        delete PoolGame.world
+
+    currentScene.unloadScene();
+
+    PoolGame.activeScene = newScene;
+    currentScene = PoolGame.scenes[PoolGame.activeScene];
+
+    currentScene.start();
 
 }

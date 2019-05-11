@@ -26,4 +26,20 @@ Canvas2D.prototype.drawImage = function (image, position, angle, scale, origin) 
 
 };
 
+Canvas2D.prototype.drawText = function (text, position, fontsize, color) {
+
+  position = typeof position !== 'undefined' ? position : new Vector2();
+  fontsize = typeof fontsize !== 'undefined' ? fontsize : "20px";
+  color = typeof color !== 'undefined' ? color : 'black';
+  fontname = "Courier New";
+
+  this._ctx.save();
+  this._ctx.translate(position.x, position.y);
+  this._ctx.font = fontsize + " " + fontname;
+  this._ctx.fillStyle = color;
+  this._ctx.fillText(text, 0, 0);
+  this._ctx.restore();
+
+}
+
 let Canvas = new Canvas2D();

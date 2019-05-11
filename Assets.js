@@ -18,6 +18,8 @@ function loadAssets(callback) {
 
     function loadSprite(fileName) {
 
+        //Canvas.drawText(1 + "%");
+
         assetsStillLoading++;
 
         let spriteImage = new Image();
@@ -39,4 +41,5 @@ function loadAssets(callback) {
     sprites.ball_2 = loadSprite('ball_2.png');
     sprites.ball_3 = loadSprite('ball_3.png');
     assetsLoadingLoop(callback);
+
 }
