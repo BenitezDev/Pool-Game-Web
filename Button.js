@@ -1,7 +1,7 @@
 
 
 
-function Button(position, img, width, height, scale, ) {
+function Button(position, img, width, height, scale, onclick, aux) {
 
     if (!position) position = new Vector2();
     this.position = position;
@@ -22,6 +22,11 @@ function Button(position, img, width, height, scale, ) {
         width: this.width,
         height: this.height
     }
+    if (!aux) aux = "hola mundo";
+    this.aux = aux;
+
+    if (!onclick) onclick = function () { alert(aux) };
+    this.onclick = onclick;
 
     this.start();
 
@@ -37,7 +42,7 @@ Button.prototype.update = function () {
     if (PointInsideRectangle(input.mouse, this.rectangle) && input.mouse.pressed) {
 
         console.log("Click on button");
-        PoolGame.ChangeSceneTo(scenesTAGs.GAME);
+        this.onclick(this.aux);
     }
 
 }
