@@ -20,7 +20,6 @@ Hole.prototype.update = function () {
 
             currentScene.ballPools.splice(currentScene.ballPools.indexOf(ball), 1);
             PoolGame.world.DestroyBody(ball.collider);
-            audioManager.playFx(this.sfx);
 
         }
 

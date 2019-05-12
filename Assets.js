@@ -73,8 +73,9 @@ function loadAssets(callback) {
 
     // Audio
     audio.main_Theme = loadAudio('main_theme.mp3');
-    audio.hit = loadAudio('hit.mp3');
-    
+    audio.main_Theme.volume = 0.5;
+    audio.hit = loadAudio('hit.wav');
+
     assetsLoadingLoop(callback);
 
 }

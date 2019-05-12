@@ -104,6 +104,9 @@ function CreateWorld(ctx, gravity) {
   let doSleep = true;
   world = new b2World(gravity, doSleep);
 
+  // prepare the collision event function
+  Box2D.Dynamics.b2ContactListener.prototype.BeginContact = OnContactDetected;
+
   // DebugDraw is used to create the drawing with physics
   let debugDraw = new b2DebugDraw();
   debugDraw.SetSprite(ctx);
@@ -114,5 +117,20 @@ function CreateWorld(ctx, gravity) {
 
   world.SetDebugDraw(debugDraw);
   return world;
+
+}
+
+function OnContactDetected(contact) {
+  //console.table(contact)
+  var a = contact.GetFixtureA().GetBody().GetUserData();
+  var b = contact.GetFixtureB().GetBody().GetUserData();
+
+  // car and wall
+  if ((a != null && b != null) &&
+    ((typeof (a.type) === 'wall' && typeof (b.type) === 'car') ||
+      (typeof (a.type) === 'car' && typeof (b.type) === 'wall'))) {
+    audioManager.playFx(audio.hit, 0);
+    console.log("collision between " + a.type + " and " + b.type);
+  }
 
 }

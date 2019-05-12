@@ -2,6 +2,9 @@
 
 function Ball(img, pos, ori, radius, scale) {
 
+    // Collider tag
+    this.type = 'ball';
+
     if (!pos) pos = new Vector2();
     this.position = pos;
 
@@ -35,16 +38,16 @@ function Ball(img, pos, ori, radius, scale) {
     this.fix_def.shape = new b2CircleShape(radius * this.scale);
 
     // Body: position of the object and its type (dynamic, static o kinetic)
-    this.body_def = new b2BodyDef();
-    this.body_def.position.Set(this.position.x, this.position.y);
+    this.body = new b2BodyDef();
+    this.body.position.Set(this.position.x, this.position.y);
 
-    this.body_def.linearDamping = defaultOptions.linearDamping;
-    this.body_def.angularDamping = defaultOptions.angularDamping;
+    this.body.linearDamping = defaultOptions.linearDamping;
+    this.body.angularDamping = defaultOptions.angularDamping;
 
-    this.body_def.type = defaultOptions.type; // type: b2_dynamicBody
-    this.body_def.userData = defaultOptions.user_data;
+    this.body.type = defaultOptions.type; // type: b2_dynamicBody
+    this.body.userData = defaultOptions.user_data;
 
-    this.collider = PoolGame.world.CreateBody(this.body_def);
+    this.collider = PoolGame.world.CreateBody(this.body);
     this.fixture = this.collider.CreateFixture(this.fix_def);
 
 }

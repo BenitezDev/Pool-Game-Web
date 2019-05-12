@@ -18,3 +18,4 @@ function PointInsideRectangle(point, rectangle) {
         point.y >= (rectangle.position.y) &&
         point.y <= (rectangle.position.y + rectangle.height);
 }
+

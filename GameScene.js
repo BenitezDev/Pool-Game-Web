@@ -28,11 +28,14 @@ GameScene.prototype.start = function () {
     { x: 150, y: 190 },
     KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN
   );
+  this.car.body.SetUserData(this.car);
+
   this.car2 = new Car(
     sprites.car_2,
     { x: 150, y: 290 },
     KEY_A, KEY_D, KEY_W, KEY_S
   );
+  this.car2.body.SetUserData(this.car2);
 
   // Create the ball pool
   this.ballPools.push(
@@ -59,6 +62,8 @@ GameScene.prototype.start = function () {
       68,
       0.3)
   );
+
+  this.ballPools.forEach(ball => { ball.collider.SetUserData(ball); });
 
   // Create the holes
   this.holes.push(new Hole({ x: 0, y: 0 }, 25));
@@ -107,18 +112,19 @@ GameScene.prototype.createTableColliders = function () {
 
   this.tableColliders = [
     // left
-    CreateBox(PoolGame.world, 0, 240, 40, 165, { type: b2Body.b2_staticBody }),
+    { body: CreateBox(PoolGame.world, 0, 240, 40, 165, { type: b2Body.b2_staticBody }), type: 'wall' },
     // right
-    CreateBox(PoolGame.world, 800, 240, 40, 165, { type: b2Body.b2_staticBody }),
+    { body: CreateBox(PoolGame.world, 800, 240, 40, 165, { type: b2Body.b2_staticBody }), type: 'wall' },
     // left up
-    CreateBox(PoolGame.world, 220, 0, 150, 40, { type: b2Body.b2_staticBody }),
+    { body: CreateBox(PoolGame.world, 220, 0, 150, 40, { type: b2Body.b2_staticBody }), type: 'wall' },
     // left down
-    CreateBox(PoolGame.world, 220, 480, 150, 40, { type: b2Body.b2_staticBody }),
+    { body: CreateBox(PoolGame.world, 220, 480, 150, 40, { type: b2Body.b2_staticBody }), type: 'wall' },
     // right up
-    CreateBox(PoolGame.world, 583, 0, 150, 40, { type: b2Body.b2_staticBody }),
+    { body: CreateBox(PoolGame.world, 583, 0, 150, 40, { type: b2Body.b2_staticBody }), type: 'wall' },
     // right down
-    CreateBox(PoolGame.world, 583, 480, 150, 40, { type: b2Body.b2_staticBody }),
+    { body: CreateBox(PoolGame.world, 583, 480, 150, 40, { type: b2Body.b2_staticBody }), type: 'wall' },
   ];
+  this.tableColliders.forEach(coll => { coll.body.SetUserData(coll); });
 
 }
 

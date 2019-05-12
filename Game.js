@@ -136,5 +136,5 @@ Game.prototype.ChangeSceneTo = function (newScene) {
 
 Game.prototype.PrepareAudioManager = function () {
     audioManager = new AudioManager();
-    audioManager.playBackgroundMusic(PoolGame.backgroundAudio, true);
+    //audioManager.playBackgroundMusic(PoolGame.backgroundAudio, true);
 }

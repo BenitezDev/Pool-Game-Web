@@ -47,6 +47,9 @@ function Car(img, pos, KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN) {
 
 Car.prototype.start = function () {
 
+    // Collider tag
+    this.type = 'car';
+
     // Chassis
     let chassisOptions = {
         density: 1,
