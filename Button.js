@@ -35,14 +35,17 @@ function Button(position, img, width, height, scale, onclick, aux) {
 
 Button.prototype.start = function () {
     this.position = new Vector2(this.position.x - this.halfWidth, this.position.y - this.halfHeight);
+
 }
 
 
 Button.prototype.update = function () {
+
     if (PointInsideRectangle(input.mouse, this.rectangle) && input.mouse.pressed) {
 
         console.log("Click on button");
         this.onclick(this.aux);
+
     }
 
 }
@@ -52,7 +55,6 @@ Button.prototype.update = function () {
 Button.prototype.draw = function () {
 
     Canvas.drawImage(this.img, this.position);
-
 
 
     Canvas._ctx.beginPath();

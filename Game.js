@@ -11,7 +11,10 @@ const scenesTAGs = {
 
 let currentScene = null;
 
+
+
 let PoolGame = new Game();
+let audioManager = null;
 
 function Game() {
 
@@ -26,6 +29,8 @@ Game.prototype.init = function () {
     PoolGame.scenes.push(new MenuScene());
     PoolGame.scenes.push(new GameScene());
 
+    // Audio Background
+    PoolGame.backgroundAudio = audio.main_Theme;
 }
 
 
@@ -34,7 +39,9 @@ Game.prototype.start = function () {
     PoolGame.init();
 
     PoolGame.SetupInput();
-    //PoolGame.PreparePhysics();
+
+
+    PoolGame.PrepareAudioManager();
 
     PoolGame.CreateFPSmanager();
 
@@ -125,4 +132,9 @@ Game.prototype.ChangeSceneTo = function (newScene) {
 
     currentScene.start();
 
+}
+
+Game.prototype.PrepareAudioManager = function () {
+    audioManager = new AudioManager();
+    audioManager.playBackgroundMusic(PoolGame.backgroundAudio, true);
 }

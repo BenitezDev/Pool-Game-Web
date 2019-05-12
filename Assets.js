@@ -1,6 +1,7 @@
 // Load all the assets before starting starting the game
 
 var sprites = {};
+var audio = {};
 var assetsStillLoading = 0;
 
 function assetsLoadingLoop(callback) {
@@ -33,6 +34,32 @@ function loadAssets(callback) {
 
     }
 
+
+    function loadAudio(fileName) {
+
+        //assetsStillLoading++;
+
+        let audio = new Audio("./assets/audio/" + fileName);
+        //audio.src = "./assets/audio/" + fileName;
+        // audio.onload = function () {
+        //     assetsStillLoading--;
+        //     audio.play();
+        // }
+
+        // audio.addEventListener("onload", function () {
+        //     assetsStillLoading--;
+        //     audio.play();
+        // });
+
+
+        // audio.onload = function () {
+        //     assetsStillLoading--;
+        // }
+
+        return audio;
+    }
+
+    // Sprites
     sprites.background = loadSprite('background.png');
     sprites.car = loadSprite('car_1.png');
     sprites.car_2 = loadSprite('car_2.png');
@@ -42,6 +69,12 @@ function loadAssets(callback) {
     sprites.ball_3 = loadSprite('ball_3.png');
     sprites.start_game = loadSprite('start_game.png');
     sprites.options = loadSprite('options.png');
+    sprites.menu_background = loadSprite('menu_background.png');
+
+    // Audio
+    audio.main_Theme = loadAudio('main_theme.mp3');
+    audio.hit = loadAudio('hit.mp3');
+    
     assetsLoadingLoop(callback);
 
 }
