@@ -69,6 +69,12 @@ function loadAssets(callback) {
     sprites.ball_1 = loadSprite('ball_1.png');
     sprites.ball_2 = loadSprite('ball_2.png');
     sprites.ball_3 = loadSprite('ball_3.png');
+    sprites.ball_4 = loadSprite('ball_4.png');
+    sprites.ball_5 = loadSprite('ball_5.png');
+    sprites.ball_6 = loadSprite('ball_6.png');
+    sprites.ball_7 = loadSprite('ball_7.png');
+    sprites.ball_8 = loadSprite('ball_8.png');
+    sprites.ball_9 = loadSprite('ball_9.png');
     sprites.start_game = loadSprite('start_game.png');
     sprites.options = loadSprite('options.png');
     sprites.menu_background = loadSprite('menu_background.png');

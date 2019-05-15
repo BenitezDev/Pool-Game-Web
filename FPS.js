@@ -40,7 +40,7 @@ fps.prototype.computeFPS = function () {
 fps.prototype.draw = function (color) {
 
     color = typeof color !== 'undefined' ? color : 'black';
-    Canvas.drawText('FPS: ' + FPS, { x: 80, y: 15 }, 30, color);
-    Canvas.drawText('deltaTime: ' + Math.round(1000 / deltaTime), { x: 130, y: 15 }, 30, color);
+    Canvas.drawText('FPS: ' + FPS, { x: 80, y: 465 }, 30, color);
+    Canvas.drawText('deltaTime: ' + Math.round(1000 / deltaTime), { x: 130, y: 465 }, 30, color);
 
 }

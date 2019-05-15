@@ -50,6 +50,8 @@ function Ball(img, pos, ori, radius, scale) {
     this.collider = PoolGame.world.CreateBody(this.body);
     this.fixture = this.collider.CreateFixture(this.fix_def);
 
+    this.owner = null;
+
 }
 
 

@@ -57,10 +57,11 @@ Button.prototype.draw = function () {
     Canvas.drawImage(this.img, this.position);
 
 
-    Canvas._ctx.beginPath();
-    Canvas._ctx.lineWidth = "1.5";
-    Canvas._ctx.strokeStyle = "green";
-    Canvas._ctx.rect(this.rectangle.position.x, this.rectangle.position.y, this.rectangle.width, this.rectangle.height);
-    Canvas._ctx.stroke();
+    // Canvas._ctx.beginPath();
+    // Canvas._ctx.lineWidth = "1.5";
+    // Canvas._ctx.strokeStyle = "green";
+    // Canvas._ctx.rect(this.rectangle.position.x, this.rectangle.position.y, this.rectangle.width, this.rectangle.height);
+    // Canvas._ctx.closePath();
+    // Canvas._ctx.stroke();
 
 }

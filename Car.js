@@ -1,4 +1,4 @@
-function Car(img, pos, KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN) {
+function Car(img, pos, player, KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN) {
 
     this.img = img;
     this.wheelImg = sprites.wheel;
@@ -6,6 +6,7 @@ function Car(img, pos, KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN) {
     this.angle = 90;
     this.position = pos;
 
+    this.owner = player;
     // Car movement inputs
     this.KEY_LEFT = KEY_LEFT;
     this.KEY_RIGHT = KEY_RIGHT;

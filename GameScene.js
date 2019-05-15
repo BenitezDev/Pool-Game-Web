@@ -12,6 +12,8 @@ function GameScene() {
   this.car = null;
   this.car2 = null;
 
+  this.scores = [];
+
 }
 
 GameScene.prototype.start = function () {
@@ -26,6 +28,7 @@ GameScene.prototype.start = function () {
   this.car = new Car(
     sprites.car,
     { x: 150, y: 190 },
+    'player1',
     KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN
   );
   this.car.body.SetUserData(this.car);
@@ -33,37 +36,13 @@ GameScene.prototype.start = function () {
   this.car2 = new Car(
     sprites.car_2,
     { x: 150, y: 290 },
+    'player2',
     KEY_A, KEY_D, KEY_W, KEY_S
   );
   this.car2.body.SetUserData(this.car2);
 
   //Create the ball pool
-  this.ballPools.push(
-    new Ball(
-      sprites.ball_1,
-      { x: 550, y: 240 },
-      { x: sprites.ball_1.width / 2, y: sprites.ball_1.height / 2 },
-      68,
-      0.3)
-  );
-  this.ballPools.push(
-    new Ball(
-      sprites.ball_2,
-      { x: 585, y: 220 },
-      { x: sprites.ball_2.width / 2, y: sprites.ball_2.height / 2 },
-      68,
-      0.3)
-  );
-  this.ballPools.push(
-    new Ball(
-      sprites.ball_3,
-      { x: 585, y: 260 },
-      { x: sprites.ball_3.width / 2, y: sprites.ball_3.height / 2 },
-      68,
-      0.3)
-  );
-
-
+  this.instantiateBallsInDiamond();
 
 
   this.ballPools.forEach(ball => { ball.collider.SetUserData(ball); });
@@ -77,6 +56,12 @@ GameScene.prototype.start = function () {
   this.holes.push(new Hole({ x: 763, y: 437 }, 30));
 
 
+  // Scores
+  this.score1 = new ScoreManager(5, { x: 500, y: 14 });
+  this.score2 = new ScoreManager(5, { x: 120, y: 14 });
+
+  this.scores.push(this.score1);
+  this.scores.push(this.score2);
 
 }
 
@@ -91,6 +76,7 @@ GameScene.prototype.update = function () {
 
   // Update holes. AKA check if a ball has entered a hole
   this.holes.forEach(hole => hole.update());
+
 
 };
 
@@ -109,6 +95,16 @@ GameScene.prototype.draw = function () {
 
   // 4º Holes Debug
   this.holes.forEach(hole => hole.draw());
+
+  // 5º Draw Score
+  // Player 1
+  //Canvas.drawText("Player 1: " + "X", { x: 80, y: 27 }, '25px', 'yellow');
+
+  this.scores.forEach(score => {
+    score.draw();
+
+  });
+
 
 };
 
@@ -149,5 +145,96 @@ GameScene.prototype.unloadScene = function () {
   this.tableColliders = [];
   this.car = null;
   this.car2 = null;
+  this.scores = [];
+}
+
+GameScene.prototype.createBallInCenter = function () {
+  this.ballPools.push(
+    new Ball(
+      sprites.ball_1,
+      { x: 400, y: 240 },
+      { x: sprites.ball_3.width / 2, y: sprites.ball_3.height / 2 },
+      68,
+      0.3)
+  );
+  audioManager.playFx(audio.table_hit, 1); // Max volume is half max audio
+}
+
+
+
+GameScene.prototype.instantiateBallsInDiamond = function () {
+  this.ballPools.push(
+    new Ball(
+      sprites.ball_5,
+      { x: 400, y: 240 },
+      { x: sprites.ball_1.width / 2, y: sprites.ball_1.height / 2 },
+      68,
+      0.3)
+  );
+  this.ballPools.push(
+    new Ball(
+      sprites.ball_7,
+      { x: 400, y: 285 },
+      { x: sprites.ball_2.width / 2, y: sprites.ball_2.height / 2 },
+      68,
+      0.3)
+  );
+  this.ballPools.push(
+    new Ball(
+      sprites.ball_3,
+      { x: 400, y: 195 },
+      { x: sprites.ball_3.width / 2, y: sprites.ball_3.height / 2 },
+      68,
+      0.3)
+  );
+
+  this.ballPools.push(
+    new Ball(
+      sprites.ball_2,
+      { x: 360, y: 217.5 },
+      { x: sprites.ball_3.width / 2, y: sprites.ball_3.height / 2 },
+      68,
+      0.3)
+  );
+  this.ballPools.push(
+    new Ball(
+      sprites.ball_4,
+      { x: 360, y: 262.5 },
+      { x: sprites.ball_3.width / 2, y: sprites.ball_3.height / 2 },
+      68,
+      0.3)
+  );
+  this.ballPools.push(
+    new Ball(
+      sprites.ball_6,
+      { x: 440, y: 217.5 },
+      { x: sprites.ball_3.width / 2, y: sprites.ball_3.height / 2 },
+      68,
+      0.3)
+  );
+  this.ballPools.push(
+    new Ball(
+      sprites.ball_8,
+      { x: 440, y: 262.5 },
+      { x: sprites.ball_3.width / 2, y: sprites.ball_3.height / 2 },
+      68,
+      0.3)
+  );
+  this.ballPools.push(
+    new Ball(
+      sprites.ball_1,
+      { x: 320, y: 240 },
+      { x: sprites.ball_1.width / 2, y: sprites.ball_1.height / 2 },
+      68,
+      0.3)
+  );
+  this.ballPools.push(
+    new Ball(
+      sprites.ball_9,
+      { x: 480, y: 240 },
+      { x: sprites.ball_1.width / 2, y: sprites.ball_1.height / 2 },
+      68,
+      0.3)
+  );
 
 }

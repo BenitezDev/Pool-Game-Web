@@ -62,12 +62,18 @@ function OnContactDetected(contact) {
         // Ball and Ball
         if (a.type === 'ball' && b.type === 'ball') {
 
+            if (a.owner) {
+                b.owner = a.owner;
+            } else {
+                b.owner = null;
+            }
+
             let maxA = Math.abs(contact.GetFixtureA().GetBody().GetLinearVelocity().x) + Math.abs(contact.GetFixtureA().GetBody().GetLinearVelocity().y);
             let maxB = Math.abs(contact.GetFixtureB().GetBody().GetLinearVelocity().x) + Math.abs(contact.GetFixtureB().GetBody().GetLinearVelocity().y);
 
             audioManager.playFx(audio.balls_collide, Clamp((Math.max(maxA, maxB) / 12.5), 0, 1));
 
-            //console.log("collision between " + a.type + " and " + b.type);
+            console.log("BOLAS: " + a.img.src + " and " + b.img.src);
         }
 
         // Ball and Wall
@@ -103,7 +109,8 @@ function OnContactDetected(contact) {
         // Car and Ball
         if (a.type === 'car' && b.type === 'ball') {
 
-            console.log("collision between " + a.type + " and " + b.type);
+            b.owner = a.owner;
+            console.log(b.owner + "----" + a.owner);
 
             let max = Math.abs(contact.GetFixtureA().GetBody().GetLinearVelocity().x) + Math.abs(contact.GetFixtureA().GetBody().GetLinearVelocity().y);
 
