@@ -76,6 +76,8 @@ GameScene.prototype.start = function () {
   this.holes.push(new Hole({ x: 400, y: 447 }, 30));
   this.holes.push(new Hole({ x: 763, y: 437 }, 30));
 
+
+
 }
 
 GameScene.prototype.update = function () {

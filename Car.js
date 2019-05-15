@@ -14,11 +14,11 @@ function Car(img, pos, KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN) {
 
     // Car Physics
     this.body = null;
-    this.speed = 0.0;
-    this.maxSpeed = 250000;
+    this.speed = 5;
+    this.maxSpeed = 300000;
     this.engineOn = false;
     this.gear = 1; // gear (-1: forward, 1: backward)
-    this.wheelRotationSpeed = 8;
+    this.wheelRotationSpeed = 1;
     this.wheelRelocationSpeed = 0.5;
 
     // Front Wheels
@@ -52,10 +52,10 @@ Car.prototype.start = function () {
     let chassisOptions = {
         density: 1,
         friction: 1.0,
-        restitution: 0.5,
+        restitution: 1,
 
-        linearDamping: 1.0,
-        angularDamping: 10.0,
+        linearDamping: 0.1,
+        angularDamping: 50,
 
         type: b2Body.b2_dynamicBody
     };
@@ -63,22 +63,22 @@ Car.prototype.start = function () {
 
     // Wheels
     let frontWheelsOptions = {
-        density: 0.1,
+        density: 1,
         friction: 1.0,
-        restitution: 0.5,
+        restitution: 1,
 
-        linearDamping: 1.0,
-        angularDamping: 1.0,
+        linearDamping: 1,
+        angularDamping: 10.0,
 
         type: b2Body.b2_dynamicBody
     };
     let rearWheelsOptions = {
         density: 1000,
-        friction: 1.0,
+        friction: 5,
         restitution: 0,
 
-        linearDamping: 1.0,
-        angularDamping: 100.0,
+        linearDamping: 0.5,
+        angularDamping: 3,
 
         type: b2Body.b2_dynamicBody
     };
@@ -86,8 +86,8 @@ Car.prototype.start = function () {
     this.frontLeftWheel = CreateBox(PoolGame.world, this.position.x + 17, this.position.y - 14, 3, 6, frontWheelsOptions);
     this.frontRightWheel = CreateBox(PoolGame.world, this.position.x + 17, this.position.y + 14, 3, 6, frontWheelsOptions);
 
-    this.rearLeftWheel = CreateBox(PoolGame.world, this.position.x - 19, this.position.y + 14, 3, 6, rearWheelsOptions);
-    this.rearRightWheel = CreateBox(PoolGame.world, this.position.x - 19, this.position.y - 14, 3, 6, rearWheelsOptions);
+    this.rearLeftWheel = CreateBox(PoolGame.world, this.position.x - 13, this.position.y + 8, 3, 10, rearWheelsOptions);
+    this.rearRightWheel = CreateBox(PoolGame.world, this.position.x - 13, this.position.y - 8, 3, 10, rearWheelsOptions);
 
     this.wheels.push(this.frontLeftWheel);
     this.wheels.push(this.frontRightWheel);
@@ -113,7 +113,7 @@ Car.prototype.start = function () {
         jointDef.lowerAngle = -Math.PI / 4; // -45 degrees
         jointDef.upperAngle = Math.PI / 4; // 45 degrees
         jointDef.enableLimit = true;
-        jointDef.maxMotorTorque = 250000.0;
+        jointDef.maxMotorTorque = 3000000.0;
         jointDef.enableMotor = true;
         this.frontWheels[i].joint = world.CreateJoint(jointDef);
     }
@@ -121,12 +121,15 @@ Car.prototype.start = function () {
     // Initialize rear wheels
     for (let i in this.rearWheels) {
         let jointDef = new b2PrismaticJointDef();
-
-        let center = new Vector2(this.rearWheels[i].GetWorldCenter().x + 20, this.rearWheels[i].GetWorldCenter().y);
-        jointDef.Initialize(this.body, this.rearWheels[i], center, new b2Vec2(1, 1));
+        let x = true;
+        let center = new Vector2(this.rearWheels[i].GetWorldCenter().x, this.rearWheels[i].GetWorldCenter().y);;
+        jointDef.Initialize(this.body, this.rearWheels[i], center, new b2Vec2(1, 0));
         jointDef.enableLimit = true;
+
+        jointDef.enableMotor = true;
         this.rearWheels[i].joint = world.CreateJoint(jointDef);
     }
+
 
 }
 
@@ -183,7 +186,7 @@ Car.prototype.update = function () {
 Car.prototype.draw = function () {
 
     // 1º Draw wheels
-    this.wheels.forEach(wheel => {
+    this.frontWheels.forEach(wheel => {
         Canvas.drawImage(this.wheelImg, wheel.GetPosition(), wheel.GetAngle(), this.scale, { x: this.wheelImg.width / 2, y: this.wheelImg.height / 2 });
     });
 
