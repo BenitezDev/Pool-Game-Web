@@ -20,8 +20,8 @@ AudioManager.prototype.update = function () {
 }
 
 
-AudioManager.prototype.playFx = function (fx, currentTime) {
-    fx.currentTime = currentTime;
+AudioManager.prototype.playFx = function (fx, volume) {
+    fx.volume = volume;
     fx.play();
 }
 

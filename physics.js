@@ -119,18 +119,3 @@ function CreateWorld(ctx, gravity) {
   return world;
 
 }
-
-function OnContactDetected(contact) {
-  //console.table(contact)
-  var a = contact.GetFixtureA().GetBody().GetUserData();
-  var b = contact.GetFixtureB().GetBody().GetUserData();
-
-  // car and wall
-  if ((a != null && b != null) &&
-    ((typeof (a.type) === 'wall' && typeof (b.type) === 'car') ||
-      (typeof (a.type) === 'car' && typeof (b.type) === 'wall'))) {
-    audioManager.playFx(audio.hit, 0);
-    console.log("collision between " + a.type + " and " + b.type);
-  }
-
-}

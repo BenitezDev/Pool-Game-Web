@@ -16,11 +16,11 @@ Hole.prototype.update = function () {
 
     // Check if a ball has entered a hole
     currentScene.ballPools.forEach(ball => {
-        if (CheckCollisionBetweenCircles(this.position, this.radius, ball.position, ball.radius * ball.scale)) {
+        if (CircleInsideCircle(this.position, this.radius, ball.position, ball.radius * ball.scale)) {
 
             currentScene.ballPools.splice(currentScene.ballPools.indexOf(ball), 1);
             PoolGame.world.DestroyBody(ball.collider);
-
+            audioManager.playFx(audio.hole, 1);
         }
 
     });

@@ -1,10 +1,8 @@
-
-
 function Car(img, pos, KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN) {
 
     this.img = img;
     this.wheelImg = sprites.wheel;
-    this.scale = 0.20;
+    this.scale = 0.15;
     this.angle = 90;
     this.position = pos;
 
@@ -17,11 +15,11 @@ function Car(img, pos, KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN) {
     // Car Physics
     this.body = null;
     this.speed = 0.0;
-    this.maxSpeed = 300000;
+    this.maxSpeed = 250000;
     this.engineOn = false;
     this.gear = 1; // gear (-1: forward, 1: backward)
-    this.wheelRotationSpeed = 2;
-    this.wheelRelocationSpeed = 0.3;
+    this.wheelRotationSpeed = 8;
+    this.wheelRelocationSpeed = 0.5;
 
     // Front Wheels
     this.frontLeftWheel = null;
@@ -56,16 +54,16 @@ Car.prototype.start = function () {
         friction: 1.0,
         restitution: 0.5,
 
-        linearDamping: 10.0,
+        linearDamping: 1.0,
         angularDamping: 10.0,
 
         type: b2Body.b2_dynamicBody
     };
-    this.body = CreateBox(PoolGame.world, this.position.x, this.position.y, 15, 45, chassisOptions);
+    this.body = CreateBox(PoolGame.world, this.position.x, this.position.y, 12, 35, chassisOptions);
 
     // Wheels
     let frontWheelsOptions = {
-        density: 10,
+        density: 0.1,
         friction: 1.0,
         restitution: 0.5,
 
@@ -75,21 +73,21 @@ Car.prototype.start = function () {
         type: b2Body.b2_dynamicBody
     };
     let rearWheelsOptions = {
-        density: 100,
+        density: 1000,
         friction: 1.0,
-        restitution: 0.5,
+        restitution: 0,
 
         linearDamping: 1.0,
-        angularDamping: 1,
+        angularDamping: 100.0,
 
         type: b2Body.b2_dynamicBody
     };
 
-    this.frontLeftWheel = CreateBox(PoolGame.world, this.position.x + 20, this.position.y - 18, 5, 10, frontWheelsOptions);
-    this.frontRightWheel = CreateBox(PoolGame.world, this.position.x + 20, this.position.y + 18, 5, 10, frontWheelsOptions);
+    this.frontLeftWheel = CreateBox(PoolGame.world, this.position.x + 17, this.position.y - 14, 3, 6, frontWheelsOptions);
+    this.frontRightWheel = CreateBox(PoolGame.world, this.position.x + 17, this.position.y + 14, 3, 6, frontWheelsOptions);
 
-    this.rearLeftWheel = CreateBox(PoolGame.world, this.position.x - 20, this.position.y + 18, 5, 10, rearWheelsOptions);
-    this.rearRightWheel = CreateBox(PoolGame.world, this.position.x - 20, this.position.y - 18, 5, 10, rearWheelsOptions);
+    this.rearLeftWheel = CreateBox(PoolGame.world, this.position.x - 19, this.position.y + 14, 3, 6, rearWheelsOptions);
+    this.rearRightWheel = CreateBox(PoolGame.world, this.position.x - 19, this.position.y - 14, 3, 6, rearWheelsOptions);
 
     this.wheels.push(this.frontLeftWheel);
     this.wheels.push(this.frontRightWheel);
@@ -115,7 +113,7 @@ Car.prototype.start = function () {
         jointDef.lowerAngle = -Math.PI / 4; // -45 degrees
         jointDef.upperAngle = Math.PI / 4; // 45 degrees
         jointDef.enableLimit = true;
-        jointDef.maxMotorTorque = 30000.0;
+        jointDef.maxMotorTorque = 250000.0;
         jointDef.enableMotor = true;
         this.frontWheels[i].joint = world.CreateJoint(jointDef);
     }
@@ -123,7 +121,9 @@ Car.prototype.start = function () {
     // Initialize rear wheels
     for (let i in this.rearWheels) {
         let jointDef = new b2PrismaticJointDef();
-        jointDef.Initialize(this.body, this.rearWheels[i], this.rearWheels[i].GetWorldCenter(), new b2Vec2(1, 0));
+
+        let center = new Vector2(this.rearWheels[i].GetWorldCenter().x + 20, this.rearWheels[i].GetWorldCenter().y);
+        jointDef.Initialize(this.body, this.rearWheels[i], center, new b2Vec2(1, 1));
         jointDef.enableLimit = true;
         this.rearWheels[i].joint = world.CreateJoint(jointDef);
     }
@@ -157,6 +157,13 @@ Car.prototype.update = function () {
         wheelJoint.SetMotorSpeed(angleDiff * wheelRotationSpeed);
     }
 
+    // Apply motor movement of the wheels. Four-wheel drive
+    for (let i in this.wheels) {
+        var direction = this.wheels[i].GetTransform().R.col2.Copy();
+        direction.Multiply(this.speed);
+        this.wheels[i].ApplyForce(direction, this.wheels[i].GetPosition());
+    }
+
     // Calculate movement
     if (!input.isKeyPressed(this.KEY_UP) || !input.isKeyPressed(this.KEY_DOWN)) {
         this.stopEngine();
@@ -168,13 +175,6 @@ Car.prototype.update = function () {
     else if (input.isKeyPressed(this.KEY_DOWN)) {
         this.gear = 1;
         this.startEngine();
-    }
-
-    // Apply motor movement of the wheels. Four-wheel drive
-    for (let i in this.wheels) {
-        var direction = this.wheels[i].GetTransform().R.col2.Copy();
-        direction.Multiply(this.speed);
-        this.wheels[i].ApplyForce(direction, this.wheels[i].GetPosition());
     }
 
 }

@@ -64,7 +64,7 @@ Game.prototype.mainLoop = function () {
 
     // Physics
     if (PoolGame.world) {
-        PoolGame.world.Step(0.16, 8, 3);
+        PoolGame.world.Step(0.2, 8, 3);
         PoolGame.world.ClearForces();
     }
 

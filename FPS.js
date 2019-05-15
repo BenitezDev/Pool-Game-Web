@@ -6,6 +6,7 @@ let FPS = 0;
 let frames = 0;
 let acumDelta = 0;
 let targetDT = 0;
+let deltatime
 
 
 function fps() {

@@ -35,11 +35,13 @@ function loadAssets(callback) {
     }
 
 
-    function loadAudio(fileName) {
+    function loadAudio(fileName, volume) {
 
         //assetsStillLoading++;
 
         let audio = new Audio("./assets/audio/" + fileName);
+        audio.volume = volume;
+
         //audio.src = "./assets/audio/" + fileName;
         // audio.onload = function () {
         //     assetsStillLoading--;
@@ -72,9 +74,12 @@ function loadAssets(callback) {
     sprites.menu_background = loadSprite('menu_background.png');
 
     // Audio
-    audio.main_Theme = loadAudio('main_theme.mp3');
-    audio.main_Theme.volume = 0.5;
-    audio.hit = loadAudio('hit.wav');
+    audio.main_Theme = loadAudio('main_theme.mp3', 0.5);
+    audio.hit = loadAudio('hit.wav', 1);
+    audio.balls_collide = loadAudio('balls_collide.wav', 1);
+    audio.table_hit = loadAudio('table_hit.wav', 1);
+    audio.strike = loadAudio('strike.wav', 1);
+    audio.hole = loadAudio('hole.wav', 1);
 
     assetsLoadingLoop(callback);
 
