@@ -88,5 +88,6 @@ MenuScene.prototype.unloadScene = function () {
 
 
     this.optionsButton = {}
+    this.menuOptions = null;
 
 }

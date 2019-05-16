@@ -57,8 +57,8 @@ GameScene.prototype.start = function () {
 
 
   // Scores
-  this.score1 = new ScoreManager(1, { x: 120, y: 14 });
-  this.score2 = new ScoreManager(1, { x: 500, y: 14 });
+  this.score1 = new ScoreManager(5, { x: 120, y: 14 });
+  this.score2 = new ScoreManager(5, { x: 500, y: 14 });
 
   this.scores.push(this.score1);
   this.scores.push(this.score2);
@@ -253,7 +253,7 @@ GameScene.prototype.instantiateBallsInCircle = function () {
   let radius = 70;
 
   let imgBallPool = [sprites.ball_5, sprites.ball_4, sprites.ball_3, sprites.ball_2, sprites.ball_1, sprites.ball_8, sprites.ball_7, sprites.ball_6];
-  
+
 
   for (let index = 0; index < 8; index++) {
 

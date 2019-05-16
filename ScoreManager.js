@@ -41,10 +41,10 @@ ScoreManager.prototype.start = function () {
         sprites.menu_background.height,
         1);
 
-       
-    this.buttonPlayAgain = 
+
+    this.buttonPlayAgain =
         new Button(
-            Canvas.centerPoint, 
+            Canvas.centerPoint,
             sprites.start_game,
             sprites.start_game.width,
             sprites.start_game.height,
@@ -56,8 +56,8 @@ ScoreManager.prototype.start = function () {
 
 ScoreManager.prototype.update = function () {
 
-    
-    if(this.winPopUp.active){
+
+    if (this.winPopUp.active) {
         this.buttonPlayAgain.update();
     }
     // if (this.winPopUp.active && input.isKeyPressed(KEY_SPACE)) {
@@ -81,7 +81,7 @@ ScoreManager.prototype.draw = function () {
         i++;
     }
 
-    if (this.winPopUp.active){
+    if (this.winPopUp.active) {
         this.winPopUp.draw();
         this.buttonPlayAgain.draw();
     }

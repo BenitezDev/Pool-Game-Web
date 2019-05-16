@@ -22,7 +22,7 @@ function Button(position, img, width, height, scale, onclick, aux) {
         width: this.width,
         height: this.height
     }
-    if (!aux) aux = "hola mundo";
+    //if (!aux) aux = "hola mundo";
     this.aux = aux;
 
     if (!onclick) onclick = function () { alert(aux) };
@@ -34,19 +34,22 @@ function Button(position, img, width, height, scale, onclick, aux) {
 
 
 Button.prototype.start = function () {
+
     this.position = new Vector2(this.position.x - this.halfWidth, this.position.y - this.halfHeight);
+
+    Canvas._canvas.addEventListener("mouseup", this.mouseUp.bind(this), false);
 
 }
 
 
 Button.prototype.update = function () {
 
-    if (PointInsideRectangle(input.mouse, this.rectangle) && input.mouse.pressed) {
+    // if (PointInsideRectangle(input.mouse, this.rectangle) && input.mouse.pressed) {
 
-        console.log("Click on button");
-        this.onclick(this.aux);
+    //     console.log("Click on button");
+    //     this.onclick(this.aux);
 
-    }
+    // }
 
 }
 
@@ -65,3 +68,14 @@ Button.prototype.draw = function () {
     // Canvas._ctx.stroke();
 
 }
+
+Button.prototype.mouseUp = function () {
+    console.log("**********************************************")
+    if (PointInsideRectangle(input.mouse, this.rectangle)) {
+        console.log("Click on button");
+        this.onclick(this.aux);
+        Canvas._canvas.removeEventListener("mouseup", this.mouseUp, false);
+
+    }
+}
+
