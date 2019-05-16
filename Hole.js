@@ -24,7 +24,7 @@ Hole.prototype.update = function () {
                 currentScene.scores[1].addOnePoint(ball.img);
             else {
                 // rare rare case... just in case...
-                currentScene.createBallInCenter();
+                currentScene.createBallInCenter(ball.img);
             }
 
             currentScene.ballPools.splice(currentScene.ballPools.indexOf(ball), 1);

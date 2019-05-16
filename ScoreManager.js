@@ -1,13 +1,6 @@
 
 
 
-
-
-
-
-
-
-
 function ScoreManager(goal, position) {
 
     this.maxPoints = goal;
@@ -16,6 +9,8 @@ function ScoreManager(goal, position) {
     this.position = position;
 
     this.ballpool = [];
+
+    this.winPopUp = null;
 
     this.start();
 }
@@ -37,10 +32,37 @@ ScoreManager.prototype.start = function () {
 
 
     this.pi2 = Math.PI * 2;
+
+    this.winPopUp = new OptionsMenu(
+        false,
+        Canvas.centerPoint,
+        sprites.menu_background,
+        sprites.menu_background.width,
+        sprites.menu_background.height,
+        1);
+
+       
+    this.buttonPlayAgain = 
+        new Button(
+            Canvas.centerPoint, 
+            sprites.start_game,
+            sprites.start_game.width,
+            sprites.start_game.height,
+            1,
+            PoolGame.ChangeSceneTo,
+            scenesTAGs.INTRO
+        );
 }
 
 ScoreManager.prototype.update = function () {
 
+    
+    if(this.winPopUp.active){
+        this.buttonPlayAgain.update();
+    }
+    // if (this.winPopUp.active && input.isKeyPressed(KEY_SPACE)) {
+    //     PoolGame.ChangeSceneTo(scenesTAGs.INTRO);
+    // }
 
 
 }
@@ -59,7 +81,10 @@ ScoreManager.prototype.draw = function () {
         i++;
     }
 
-
+    if (this.winPopUp.active){
+        this.winPopUp.draw();
+        this.buttonPlayAgain.draw();
+    }
 
 
 }
@@ -95,7 +120,12 @@ ScoreManager.prototype.addOnePoint = function (img) {
     this.currentPoints++;
     this.ballpool.push(img);
 
-    if (this.currentPoints >= this.maxPoints) debugger
+    if (this.currentPoints >= this.maxPoints) {
+        this.winPopUp.show();
+        // TODO: sound end game
+    }
+
+
 }
 
 

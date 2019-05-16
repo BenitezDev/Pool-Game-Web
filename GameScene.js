@@ -2,8 +2,6 @@
 
 
 
-
-
 function GameScene() {
 
   this.ballPools = [];
@@ -44,7 +42,7 @@ GameScene.prototype.start = function () {
   this.car2.body.SetUserData(this.car2);
 
   //Create the ball pool
-  this.instantiateBallsInDiamond();
+  this.instantiateBallsInCircle();
 
 
   this.ballPools.forEach(ball => { ball.collider.SetUserData(ball); });
@@ -59,8 +57,8 @@ GameScene.prototype.start = function () {
 
 
   // Scores
-  this.score1 = new ScoreManager(5, { x: 120, y: 14 });
-  this.score2 = new ScoreManager(5, { x: 500, y: 14 });
+  this.score1 = new ScoreManager(1, { x: 120, y: 14 });
+  this.score2 = new ScoreManager(1, { x: 500, y: 14 });
 
   this.scores.push(this.score1);
   this.scores.push(this.score2);
@@ -79,6 +77,8 @@ GameScene.prototype.update = function () {
   // Update holes. AKA check if a ball has entered a hole
   this.holes.forEach(hole => hole.update());
 
+
+  this.scores.forEach(score => score.update());
 
 };
 
@@ -148,12 +148,15 @@ GameScene.prototype.unloadScene = function () {
   this.car = null;
   this.car2 = null;
   this.scores = [];
+  this.score1 = null;
+  this.score2 = null;
+
 }
 
-GameScene.prototype.createBallInCenter = function () {
+GameScene.prototype.createBallInCenter = function (img) {
   this.ballPools.push(
     new Ball(
-      sprites.ball_1,
+      img,
       { x: 400, y: 240 },
       { x: sprites.ball_3.width / 2, y: sprites.ball_3.height / 2 },
       68,
@@ -240,3 +243,40 @@ GameScene.prototype.instantiateBallsInDiamond = function () {
   );
 
 }
+
+
+GameScene.prototype.instantiateBallsInCircle = function () {
+
+  // angle = 40º in rads
+  const angle = (45 * 2 * Math.PI) / 360;
+  let currentAngle = 0;
+  let radius = 70;
+
+  let imgBallPool = [sprites.ball_5, sprites.ball_4, sprites.ball_3, sprites.ball_2, sprites.ball_1, sprites.ball_8, sprites.ball_7, sprites.ball_6];
+  
+
+  for (let index = 0; index < 8; index++) {
+
+    console.log("--" + currentAngle);
+    let pos = {
+      x: Math.sin(currentAngle) * radius + Canvas.centerPoint.x,
+      y: Math.cos(currentAngle) * radius + Canvas.centerPoint.y
+    };
+
+    this.ballPools.push(
+      new Ball(
+        imgBallPool[index],
+        { x: pos.x, y: pos.y },
+        { x: sprites.ball_1.width / 2, y: sprites.ball_1.height / 2 },
+        68,
+        0.3)
+    );
+    currentAngle += angle;
+
+  }
+  this.createBallInCenter(sprites.ball_9);
+
+}
+
+
+

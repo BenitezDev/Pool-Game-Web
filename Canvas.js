@@ -5,6 +5,8 @@ function Canvas2D() {
   this._canvas = document.getElementById("myCanvas");
   this._ctx = this._canvas.getContext("2d");
 
+  this.centerPoint = new Vector2(this._canvas.width/2, this._canvas.height/2);
+
 }
 
 Canvas2D.prototype.clear = function () {
