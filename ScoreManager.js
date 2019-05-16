@@ -94,6 +94,8 @@ ScoreManager.prototype.drawEmptyBall = function (i) {
 ScoreManager.prototype.addOnePoint = function (img) {
     this.currentPoints++;
     this.ballpool.push(img);
+
+    if (this.currentPoints >= this.maxPoints) debugger
 }
 
 

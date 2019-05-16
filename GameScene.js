@@ -27,17 +27,19 @@ GameScene.prototype.start = function () {
   // Create the cars
   this.car = new Car(
     sprites.car,
-    { x: 150, y: 190 },
+    { x: 150, y: 240 },
     'player1',
-    KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN
+    KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN,
+    'right'
   );
   this.car.body.SetUserData(this.car);
 
   this.car2 = new Car(
     sprites.car_2,
-    { x: 150, y: 290 },
+    { x: 650, y: 240 },
     'player2',
-    KEY_A, KEY_D, KEY_W, KEY_S
+    KEY_A, KEY_D, KEY_W, KEY_S,
+    'left'
   );
   this.car2.body.SetUserData(this.car2);
 
@@ -57,8 +59,8 @@ GameScene.prototype.start = function () {
 
 
   // Scores
-  this.score1 = new ScoreManager(5, { x: 500, y: 14 });
-  this.score2 = new ScoreManager(5, { x: 120, y: 14 });
+  this.score1 = new ScoreManager(5, { x: 120, y: 14 });
+  this.score2 = new ScoreManager(5, { x: 500, y: 14 });
 
   this.scores.push(this.score1);
   this.scores.push(this.score2);

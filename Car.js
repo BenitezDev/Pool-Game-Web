@@ -1,4 +1,4 @@
-function Car(img, pos, player, KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN) {
+function Car(img, pos, player, KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, lookAt) {
 
     this.img = img;
     this.wheelImg = sprites.wheel;
@@ -12,6 +12,8 @@ function Car(img, pos, player, KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN) {
     this.KEY_RIGHT = KEY_RIGHT;
     this.KEY_UP = KEY_UP;
     this.KEY_DOWN = KEY_DOWN;
+
+    this.lookAt = lookAt;
 
     // Car Physics
     this.body = null;
@@ -83,12 +85,20 @@ Car.prototype.start = function () {
 
         type: b2Body.b2_dynamicBody
     };
+    if (this.lookAt == 'right') {
+        this.frontLeftWheel = CreateBox(PoolGame.world, this.position.x + 17, this.position.y - 14, 3, 6, frontWheelsOptions);
+        this.frontRightWheel = CreateBox(PoolGame.world, this.position.x + 17, this.position.y + 14, 3, 6, frontWheelsOptions);
 
-    this.frontLeftWheel = CreateBox(PoolGame.world, this.position.x + 17, this.position.y - 14, 3, 6, frontWheelsOptions);
-    this.frontRightWheel = CreateBox(PoolGame.world, this.position.x + 17, this.position.y + 14, 3, 6, frontWheelsOptions);
+        this.rearLeftWheel = CreateBox(PoolGame.world, this.position.x - 13, this.position.y + 8, 3, 10, rearWheelsOptions);
+        this.rearRightWheel = CreateBox(PoolGame.world, this.position.x - 13, this.position.y - 8, 3, 10, rearWheelsOptions);
+    } else if (this.lookAt == 'left') {
 
-    this.rearLeftWheel = CreateBox(PoolGame.world, this.position.x - 13, this.position.y + 8, 3, 10, rearWheelsOptions);
-    this.rearRightWheel = CreateBox(PoolGame.world, this.position.x - 13, this.position.y - 8, 3, 10, rearWheelsOptions);
+        this.frontLeftWheel = CreateBox(PoolGame.world, this.position.x - 17, this.position.y + 14, 3, 6, frontWheelsOptions);
+        this.frontRightWheel = CreateBox(PoolGame.world, this.position.x - 17, this.position.y - 14, 3, 6, frontWheelsOptions);
+
+        this.rearLeftWheel = CreateBox(PoolGame.world, this.position.x + 13, this.position.y - 8, 3, 10, rearWheelsOptions);
+        this.rearRightWheel = CreateBox(PoolGame.world, this.position.x + 13, this.position.y + 8, 3, 10, rearWheelsOptions);
+    }
 
     this.wheels.push(this.frontLeftWheel);
     this.wheels.push(this.frontRightWheel);
@@ -102,7 +112,12 @@ Car.prototype.start = function () {
     this.rearWheels.push(this.rearRightWheel);
 
     // Rotate the car to look right
-    this.body.SetAngle(Math.PI / 2);
+    if (this.lookAt == 'right')
+        this.body.SetAngle(Math.PI / 2);
+    else if (this.lookAt == 'left')
+        this.body.SetAngle(Math.PI * 270 / 180);
+
+
     this.wheels.forEach(wheel => { wheel.SetAngle(Math.PI / 2); });
 
     //  Initialize front wheels
@@ -173,11 +188,14 @@ Car.prototype.update = function () {
         this.stopEngine();
     }
     if (input.isKeyPressed(this.KEY_UP)) {
-        this.gear = -1;
+
+        this.gear = this.lookAt == 'right' ? -1 : 1;
+        //this.gear = -1;
         this.startEngine();
     }
     else if (input.isKeyPressed(this.KEY_DOWN)) {
-        this.gear = 1;
+        this.gear = this.lookAt == 'right' ? 1 : -1;
+        //this.gear = 1;
         this.startEngine();
     }
 
