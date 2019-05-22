@@ -63,6 +63,21 @@ GameScene.prototype.start = function () {
   this.scores.push(this.score1);
   this.scores.push(this.score2);
 
+  // botones tactiles:
+
+  this.leftPlayer1 = new Button(
+    {x:150,y:150},
+    sprites.left_arrow,
+    sprites.left_arrow.width,
+    sprites.left_arrow.height,
+    1,
+    this.car.moveLeft,
+    this.car
+  );
+
+  // Timer
+  //pos, size, maxSeconds, color
+  this.timer = new Timer(new Vector2(550,480), '45px', 61, 'white');
 }
 
 GameScene.prototype.update = function () {
@@ -79,6 +94,10 @@ GameScene.prototype.update = function () {
 
 
   this.scores.forEach(score => score.update());
+
+  this.timer.update();
+
+  this.leftPlayer1.update();
 
 };
 
@@ -107,7 +126,10 @@ GameScene.prototype.draw = function () {
 
   });
 
+  this.leftPlayer1.draw();
+  Canvas.drawDebugPoint(  {x:150,y:150}, 5);
 
+  this.timer.draw();
 };
 
 

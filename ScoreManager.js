@@ -45,13 +45,14 @@ ScoreManager.prototype.start = function () {
     this.buttonPlayAgain =
         new Button(
             Canvas.centerPoint,
-            sprites.start_game,
+            sprites.left_arrow,
             sprites.start_game.width,
             sprites.start_game.height,
             1,
             PoolGame.ChangeSceneTo,
             scenesTAGs.INTRO
         );
+        this.buttonPlayAgain.disable();
 }
 
 ScoreManager.prototype.update = function () {
@@ -122,6 +123,7 @@ ScoreManager.prototype.addOnePoint = function (img) {
 
     if (this.currentPoints >= this.maxPoints) {
         this.winPopUp.show();
+        this.buttonPlayAgain.enable();
         // TODO: sound end game
     }
 

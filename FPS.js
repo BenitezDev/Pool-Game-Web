@@ -2,11 +2,12 @@
 
 // FPS
 let time = 0;
-let FPS = 0;
+let FPS = 60;
 let frames = 0;
 let acumDelta = 0;
 let targetDT = 0;
-let deltatime
+let deltatime;
+let deltatimeSeconds = 0;
 
 
 function fps() {
@@ -14,6 +15,8 @@ function fps() {
 }
 
 fps.prototype.computeFPS = function () {
+
+    deltatimeSeconds = 1 / FPS;
 
     // Compute FPS
     var now = Date.now();
@@ -34,7 +37,7 @@ fps.prototype.computeFPS = function () {
     }
 
     targetDT = (1 / FPS * 1000);
-
+    
 }
 
 fps.prototype.draw = function (color) {

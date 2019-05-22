@@ -1,8 +1,8 @@
 
 
 
-function Button(position, img, width, height, scale, onclick, aux) {
-
+function Button(position, img, width, height, scale, onclick, aux, rotation) {
+    this.rotation = typeof rotation !== 'undefined' ? rotation : null;
     if (!position) position = new Vector2();
     this.position = position;
 
@@ -37,27 +37,34 @@ Button.prototype.start = function () {
 
     this.position = new Vector2(this.position.x - this.halfWidth, this.position.y - this.halfHeight);
 
-    Canvas._canvas.addEventListener("mouseup", this.mouseUp.bind(this), false);
+    this.enable();
 
 }
 
 
 Button.prototype.update = function () {
 
-    // if (PointInsideRectangle(input.mouse, this.rectangle) && input.mouse.pressed) {
+    if (PointInsideRectangle(input.mouse, this.rectangle) && input.mouse.pressed) {
 
-    //     console.log("Click on button");
-    //     this.onclick(this.aux);
+        console.log("Click on button");
+        this.onclick(this.aux);
 
-    // }
+    }
 
 }
 
+Button.prototype.enable = function(){
+   // Canvas._canvas.addEventListener("mouseup", this.mouseUp.bind(this), false);
+}
+
+Button.prototype.disable = function(){
+    //Canvas._canvas.removeEventListener("mouseup", this.mouseUp, false);
+}
 
 
 Button.prototype.draw = function () {
 
-    Canvas.drawImage(this.img, this.position);
+    Canvas.drawImage(this.img, this.position, this.rotation);
 
 
     // Canvas._ctx.beginPath();
@@ -70,12 +77,12 @@ Button.prototype.draw = function () {
 }
 
 Button.prototype.mouseUp = function () {
-    console.log("**********************************************")
-    if (PointInsideRectangle(input.mouse, this.rectangle)) {
-        console.log("Click on button");
-        this.onclick(this.aux);
-        Canvas._canvas.removeEventListener("mouseup", this.mouseUp, false);
+    
+    // if (PointInsideRectangle(input.mouse, this.rectangle)) {
+    //     console.log("Click on button " + this.mouseUp);
+    //     this.onclick(this.aux);
+    //     Canvas._canvas.removeEventListener("mouseup", this.mouseUp.bind(this), false);
 
-    }
+    // }
 }
 

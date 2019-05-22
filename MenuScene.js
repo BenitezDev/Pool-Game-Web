@@ -17,7 +17,7 @@ MenuScene.prototype.start = function () {
     this.menuOptions =
         new OptionsMenu(
             false,
-            new Vector2(Canvas._canvas.width / 2, Canvas._canvas.height / 2),
+            Canvas.centerPoint,
             sprites.menu_background,
             sprites.menu_background.width,
             sprites.menu_background.height,
@@ -27,7 +27,7 @@ MenuScene.prototype.start = function () {
 
     this.startButton =
         new Button(
-            new Vector2(Canvas._canvas.width / 2, Canvas._canvas.height / 2),
+            Canvas.centerPoint,
             sprites.start_game,
             sprites.start_game.width,
             sprites.start_game.height,
@@ -56,11 +56,11 @@ MenuScene.prototype.start = function () {
 
 MenuScene.prototype.update = function () {
 
-
+    this.menuOptions.update();
+    
     this.optionsButton.update();
     this.startButton.update();
-    this.menuOptions.update();
-
+    
 };
 
 
@@ -87,7 +87,7 @@ MenuScene.prototype.unloadScene = function () {
     this.startButton = null;
 
 
-    this.optionsButton = {}
+    this.optionsButton = null;
     this.menuOptions = null;
 
 }

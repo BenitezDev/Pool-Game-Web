@@ -44,4 +44,14 @@ Canvas2D.prototype.drawText = function (text, position, fontsize, color) {
 
 }
 
+Canvas2D.prototype.drawDebugPoint = function(pos, radius){
+  this._ctx.save();
+  this._ctx.fillStyle = "red";
+  this._ctx.beginPath();
+  this._ctx.arc(pos.x, pos.y, radius, 0, 2 * Math.PI);
+  this._ctx.fill();
+  this._ctx.stroke();
+  this._ctx.restore();
+}
+
 let Canvas = new Canvas2D();

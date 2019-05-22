@@ -132,6 +132,7 @@ Car.prototype.start = function () {
         jointDef.maxMotorTorque = 3000000.0;
         jointDef.enableMotor = true;
         this.frontWheels[i].joint = world.CreateJoint(jointDef);
+        console.log("---------"+this.frontWheels[i].joint);
     }
 
     // Initialize rear wheels
@@ -201,6 +202,19 @@ Car.prototype.update = function () {
 
 }
 
+Car.prototype.moveLeft = function(car){
+    console.log("_______________________"+car.frontWheels[0].joint);
+    let wheelRotationSpeed = 0.0;
+    let wheelAngle = 0.0;
+    wheelAngle += car.frontLeftWheel.joint.m_lowerAngle;
+    wheelRotationSpeed = car.wheelRotationSpeed;
+     // Apply rotation
+     for (let i in car.frontWheels) {
+        let wheelJoint = car.frontWheels[i].joint;
+        let angleDiff = wheelAngle - wheelJoint.GetJointAngle();
+        wheelJoint.SetMotorSpeed(angleDiff * wheelRotationSpeed);
+    }
+}
 
 Car.prototype.draw = function () {
 
