@@ -18,7 +18,11 @@ Timer.prototype.start = function(){
 
 Timer.prototype.update = function(){
     this.currentTime -= deltatimeSeconds;
-    if(this.currentTime <= 0) alert("lololo");
+    if(this.currentTime <= 0) 
+    {
+        audioManager.playFx(audio.pitido_futbol,1);
+        alert("lololo");
+    }
 }
 
 Timer.prototype.draw = function(){

@@ -87,6 +87,7 @@ function loadAssets(callback) {
     audio.table_hit = loadAudio('table_hit.wav', 1);
     audio.strike = loadAudio('strike.wav', 1);
     audio.hole = loadAudio('hole.wav', 1);
+    audio.pitido_futbol = loadAudio('pitido_futbol.mp3',1);
 
     assetsLoadingLoop(callback);
 

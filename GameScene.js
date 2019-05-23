@@ -12,6 +12,8 @@ function GameScene() {
 
   this.scores = [];
 
+  this.finalScreen = null;
+
 }
 
 GameScene.prototype.start = function () {
@@ -55,10 +57,11 @@ GameScene.prototype.start = function () {
   this.holes.push(new Hole({ x: 400, y: 447 }, 30));
   this.holes.push(new Hole({ x: 763, y: 437 }, 30));
 
+  this.ballsToWin = 5;
 
   // Scores
-  this.score1 = new ScoreManager(5, { x: 120, y: 14 });
-  this.score2 = new ScoreManager(5, { x: 500, y: 14 });
+  this.score1 = new ScoreManager(this.ballsToWin, { x: 120, y: 14 });
+  this.score2 = new ScoreManager(this.ballsToWin, { x: 500, y: 14 });
 
   this.scores.push(this.score1);
   this.scores.push(this.score2);
@@ -78,6 +81,44 @@ GameScene.prototype.start = function () {
   // Timer
   //pos, size, maxSeconds, color
   this.timer = new Timer(new Vector2(550,480), '45px', 61, 'white');
+
+
+  // Final Screen
+  this.finalScreen = {
+      active: false,
+      winner : '',
+      winnerPos : new Vector2(300, Canvas.centerPoint.y - 120),
+      //position, img, width, height, scale, onclick, aux, rotation
+      mainMenuButton : new Button(
+        Canvas.centerPoint,
+        sprites.start_game,
+        sprites.start_game.width,
+        sprites.start_game.height,
+        1,
+        PoolGame.ChangeSceneTo,
+        scenesTAGs.INTRO
+      ),
+      backgroundImg : sprites.menu_background,
+
+      // enable: function(){
+      //     if(this.score1.)
+      // },
+      update : function(){
+        if(this.active)
+        this.mainMenuButton.update();
+      },
+
+      draw : function (){
+        if(this.active){
+          Canvas.drawImage(this.backgroundImg, Canvas.centerPoint,0,1,new Vector2(this.backgroundImg.width/2, this.backgroundImg.height/2 ));
+          
+          // text, position, fontsize, color
+          Canvas.drawText(this.winner + ' wins!', this.winnerPos, '30px', 'yellow');
+
+          this.mainMenuButton.draw();
+        }
+      }
+  }
 }
 
 GameScene.prototype.update = function () {
@@ -93,11 +134,19 @@ GameScene.prototype.update = function () {
   this.holes.forEach(hole => hole.update());
 
 
-  this.scores.forEach(score => score.update());
+  //this.scores.forEach(score => score.update());
 
-  this.timer.update();
+ 
 
   this.leftPlayer1.update();
+
+  this.finalScreen.update();
+
+  // Stop Countdown if there is a winner
+  if(!this.finalScreen.active)
+  {
+    this.timer.update();
+  }
 
 };
 
@@ -128,6 +177,8 @@ GameScene.prototype.draw = function () {
 
   this.leftPlayer1.draw();
   Canvas.drawDebugPoint(  {x:150,y:150}, 5);
+
+  this.finalScreen.draw();
 
   this.timer.draw();
 };
@@ -300,5 +351,18 @@ GameScene.prototype.instantiateBallsInCircle = function () {
 
 }
 
+
+GameScene.prototype.checkEndGame = function(){
+
+  if(this.score1.currentPoints >= this.ballsToWin){
+    this.finalScreen.winner = 'Player 1';
+    this.finalScreen.active = true;
+  } 
+  else if(this.score2.currentPoints >= this.ballsToWin){
+    this.finalScreen.winner = 'Player 2';
+    this.finalScreen.active = true;
+  }
+  
+}
 
 

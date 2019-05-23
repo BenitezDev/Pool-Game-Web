@@ -58,9 +58,9 @@ ScoreManager.prototype.start = function () {
 ScoreManager.prototype.update = function () {
 
 
-    if (this.winPopUp.active) {
-        this.buttonPlayAgain.update();
-    }
+    // if (this.winPopUp.active) {
+    //     this.buttonPlayAgain.update();
+    // }
     // if (this.winPopUp.active && input.isKeyPressed(KEY_SPACE)) {
     //     PoolGame.ChangeSceneTo(scenesTAGs.INTRO);
     // }
@@ -82,11 +82,10 @@ ScoreManager.prototype.draw = function () {
         i++;
     }
 
-    if (this.winPopUp.active) {
-        this.winPopUp.draw();
-        this.buttonPlayAgain.draw();
-    }
-
+    // if (this.winPopUp.active) {
+    //     this.winPopUp.draw();
+    //     this.buttonPlayAgain.draw();
+    // }
 
 }
 
@@ -122,8 +121,18 @@ ScoreManager.prototype.addOnePoint = function (img) {
     this.ballpool.push(img);
 
     if (this.currentPoints >= this.maxPoints) {
-        this.winPopUp.show();
-        this.buttonPlayAgain.enable();
+
+        // Just in case...
+        if(currentScene == PoolGame.scenes[scenesTAGs.GAME]){
+            currentScene.checkEndGame();
+        }
+            
+        
+        //this.winPopUp.show();
+        //this.buttonPlayAgain.enable();
+
+
+
         // TODO: sound end game
     }
 
