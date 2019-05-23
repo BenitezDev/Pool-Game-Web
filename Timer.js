@@ -21,7 +21,23 @@ Timer.prototype.update = function(){
     if(this.currentTime <= 0) 
     {
         audioManager.playFx(audio.pitido_futbol,1);
-        alert("lololo");
+        //alert("lololo");
+
+        if(currentScene == PoolGame.scenes[scenesTAGs.GAME]){
+            currentScene.finalScreen.winner = 'Time out!';
+            currentScene.finalScreen.active = true;
+
+            
+            if(currentScene.score1.currentPoints > currentScene.score2.currentPoints){
+                currentScene.finalScreen.winnerSecondLine = ' Player1 wins!';
+            }else if(currentScene.score2.currentPoints > currentScene.score1.currentPoints){
+                currentScene.finalScreen.winnerSecondLine = ' Player2 wins!';
+            }
+            else{
+                currentScene.finalScreen.winnerSecondLine = ' No winners'
+            }
+        }
+        
     }
 }
 

@@ -29,7 +29,7 @@ GameScene.prototype.start = function () {
     sprites.car,
     { x: 150, y: 240 },
     'player1',
-    KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN,
+    KEY_A, KEY_D, KEY_W, KEY_S,
     'right'
   );
   this.car.body.SetUserData(this.car);
@@ -38,7 +38,7 @@ GameScene.prototype.start = function () {
     sprites.car_2,
     { x: 650, y: 240 },
     'player2',
-    KEY_A, KEY_D, KEY_W, KEY_S,
+    KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN,
     'left'
   );
   this.car2.body.SetUserData(this.car2);
@@ -87,10 +87,12 @@ GameScene.prototype.start = function () {
   this.finalScreen = {
       active: false,
       winner : '',
-      winnerPos : new Vector2(300, Canvas.centerPoint.y - 120),
+      winnerSecondLine : '',
+      winnerPos : new Vector2(200, Canvas.centerPoint.y - 120),
+      winnerPosSecondLine : new Vector2(200, Canvas.centerPoint.y - 90),
       //position, img, width, height, scale, onclick, aux, rotation
       mainMenuButton : new Button(
-        Canvas.centerPoint,
+        {x:480,y:380},
         sprites.start_game,
         sprites.start_game.width,
         sprites.start_game.height,
@@ -113,7 +115,8 @@ GameScene.prototype.start = function () {
           Canvas.drawImage(this.backgroundImg, Canvas.centerPoint,0,1,new Vector2(this.backgroundImg.width/2, this.backgroundImg.height/2 ));
           
           // text, position, fontsize, color
-          Canvas.drawText(this.winner + ' wins!', this.winnerPos, '30px', 'yellow');
+          Canvas.drawText(this.winner, this.winnerPos, '30px', 'yellow');
+          Canvas.drawText(this.winnerSecondLine, this.winnerPosSecondLine, '30px', 'yellow');
 
           this.mainMenuButton.draw();
         }
@@ -355,11 +358,11 @@ GameScene.prototype.instantiateBallsInCircle = function () {
 GameScene.prototype.checkEndGame = function(){
 
   if(this.score1.currentPoints >= this.ballsToWin){
-    this.finalScreen.winner = 'Player 1';
+    this.finalScreen.winner = 'Player 1 wins!';
     this.finalScreen.active = true;
   } 
   else if(this.score2.currentPoints >= this.ballsToWin){
-    this.finalScreen.winner = 'Player 2';
+    this.finalScreen.winner = 'Player 2 wins!';
     this.finalScreen.active = true;
   }
   
