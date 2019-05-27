@@ -1,0 +1,27 @@
+#myCanvas{
+    border-style: solid;
+    border-width: 3px;
+    display: block;
+    margin: 0 auto;
+}
+
+#buttons{
+    white-space: nowrap;
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+    line-height: 40px;
+    background: url("./assets/sprites/flecha_izq.png");
+    background-repeat:no-repeat;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .025em;
+  
+}
+
+.L{
+
+    background: url("./assets/sprites/flecha_izq.png");
+}
