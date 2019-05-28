@@ -107,18 +107,27 @@ MobileInputs.prototype.update = function(){
     
     // Game Scene
     if(currentScene ==PoolGame.scenes[scenesTAGs.GAME]){
-        if(movingfLeft == true){
-            currentScene.car.moveLeft(currentScene.car);
+        // if(movingfLeft == true){
+        //     currentScene.car.moveLeft(currentScene.car);
+        // }
+        // if(movingfRight == true){
+        //     currentScene.car.moveRight(currentScene.car);
+        // }
+        // if(movingForware == true){
+        //     currentScene.car.moveForward(currentScene.car);
+        // }
+        // if(movingBackwards == true){
+        //     currentScene.car.moveBackward(currentScene.car);
+        // }
+
+        if(!movingfLeft && !movingfRight){
+            currentScene.car.stopEngine();
         }
-        if(movingfRight == true){
-            currentScene.car.moveRight(currentScene.car);
-        }
-        if(movingForware == true){
-            currentScene.car.moveForward(currentScene.car);
-        }
-        if(movingBackwards == true){
-            currentScene.car.moveBackward(currentScene.car);
-        }
+        currentScene.car.pressingForward = movingForware;
+        currentScene.car.pressingBackward = movingBackwards;
+        currentScene.car.pressingLeft = movingfLeft;
+        currentScene.car.pressingRight = movingfRight;
+
 
     }
     
