@@ -42,19 +42,19 @@ function loadAssets(callback) {
         let audio = new Audio("./assets/audio/" + fileName);
         audio.volume = volume;
 
-        //audio.src = "./assets/audio/" + fileName;
-        // audio.onload = function () {
+        // audio.src = "./assets/audio/" + fileName;
+        // audio.oncanplaythrough  = function () {
         //     assetsStillLoading--;
         //     audio.play();
         // }
 
-        // audio.addEventListener("onload", function () {
+        // audio.addEventListener("oncanplaythrough ", function () {
         //     assetsStillLoading--;
         //     audio.play();
         // });
 
 
-        // audio.onload = function () {
+        // audio.oncanplaythrough  = function () {
         //     assetsStillLoading--;
         // }
 

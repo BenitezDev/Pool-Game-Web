@@ -7,18 +7,30 @@
 
 #buttonsLeft{
   
-  float: left;
-
+position: absolute;
+top: 20%;
+left: 0;
   
 }
-#buttonsRight{
-  
-    float: right;
-  
+#buttonsRight{  
+    position: absolute;
+    top: 20%;
+    right: 0;
     
-  }
+}
 
+.ButtonGroup > div {
+    width: 50px;
+    height: 20px;
+    line-height: 20px;
+    background-image: url("./assets/sprites/flecha_izq.png");
+    overflow: hidden;
+    cursor: pointer;
+}
 
+#L1{
+    transform: rotate(90deg);
+}
 
 
 

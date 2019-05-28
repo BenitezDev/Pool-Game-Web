@@ -40,6 +40,9 @@ Game.prototype.start = function () {
 
     PoolGame.init();
 
+    // prevent right click
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
     PoolGame.SetupInput();
 
     mobileInputs = new MobileInputs();
