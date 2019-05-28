@@ -21,7 +21,10 @@
   
 }
 
-.L{
+#L{
 
     background: url("./assets/sprites/flecha_izq.png");
+    border-style: solid;
+    border-width: 1px;
 }
+

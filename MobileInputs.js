@@ -8,10 +8,18 @@ var L = document.getElementById('L');
 var mc = new Hammer(L);
 
 // listen to events...
-mc.on("tap press", function(ev) {
+mc.on("press pressup", function (ev) {
     currentScene.car.moveLeft(currentScene.car);
     //myElement.textContent = ev.type +" gesture detected.";
-    console.log(ev.type +" gesture detected.");
+    // Hold gesture start (press)
+    if (ev.type == "press") {
+        console.log("Hold active");
+    }
+
+    // Hold gesture stop (pressup)
+    if (ev.type == "pressup") {
+        console.log("Hold inactive");
+    }
 });
 
 
@@ -19,33 +27,33 @@ mc.on("tap press", function(ev) {
 //     currentScene.car.moveLeft(currentScene.car);
 // }
 
-function MoveRight_1(){
+function MoveRight_1() {
 
 }
 
-function MoveForward_1(){
+function MoveForward_1() {
 
 }
 
-function MoveBackward_1(){
+function MoveBackward_1() {
 
 }
 
 
 
-function MoveLeft_2(){
+function MoveLeft_2() {
 
 }
 
-function MoveRight_2(){
+function MoveRight_2() {
 
 }
 
-function MoveForward_2(){
+function MoveForward_2() {
 
 }
 
-function MoveBackward_2(){
+function MoveBackward_2() {
 
 }
 
@@ -56,10 +64,10 @@ function holdit(btn, action, start, speedup) {
         action();
         t = setTimeout(repeat, start);
         start = start / speedup;
-        
+
     }
 
-    btn.mousedown = function() {
+    btn.mousedown = function () {
         repeat();
     }
 
@@ -68,10 +76,10 @@ function holdit(btn, action, start, speedup) {
     }
 
     //currentScene.car.moveLeft(currentScene.car);
-    btn.
+
 
     console.log(btn.onclick);
-    
+
 };
 
 /* to use */
