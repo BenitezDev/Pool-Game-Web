@@ -16,6 +16,8 @@ let currentScene = null;
 let PoolGame = new Game();
 let audioManager = null;
 
+let mobileInputs = null;
+
 function Game() {
 
     this.scenes = [];
@@ -40,6 +42,7 @@ Game.prototype.start = function () {
 
     PoolGame.SetupInput();
 
+    mobileInputs = new MobileInputs();
 
     PoolGame.PrepareAudioManager();
 
@@ -70,9 +73,13 @@ Game.prototype.mainLoop = function () {
 
     input.update();
 
+   
+
     // Current Scene
     currentScene.update();
     currentScene.draw();
+
+    mobileInputs.update();
 
     if (input.isKeyPressed(KEY_1)) PoolGame.ChangeSceneTo(scenesTAGs.INTRO);
     if (input.isKeyPressed(KEY_2)) PoolGame.ChangeSceneTo(scenesTAGs.GAME);

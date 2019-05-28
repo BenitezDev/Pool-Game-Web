@@ -203,7 +203,7 @@ Car.prototype.update = function () {
 }
 
 Car.prototype.moveLeft = function(car){
-    console.log("_______________________"+car.frontWheels[0].joint);
+    
     let wheelRotationSpeed = 0.0;
     let wheelAngle = 0.0;
     wheelAngle += car.frontLeftWheel.joint.m_lowerAngle;
@@ -214,6 +214,45 @@ Car.prototype.moveLeft = function(car){
         let angleDiff = wheelAngle - wheelJoint.GetJointAngle();
         wheelJoint.SetMotorSpeed(angleDiff * wheelRotationSpeed);
     }
+}
+
+Car.prototype.moveRight = function(car){
+    
+    let wheelRotationSpeed = 0.0;
+    let wheelAngle = 0.0;
+    wheelAngle += car.frontLeftWheel.joint.m_upperAngle;
+    wheelRotationSpeed = car.wheelRotationSpeed;
+     // Apply rotation
+     for (let i in car.frontWheels) {
+        let wheelJoint = car.frontWheels[i].joint;
+        let angleDiff = wheelAngle - wheelJoint.GetJointAngle();
+        wheelJoint.SetMotorSpeed(angleDiff * wheelRotationSpeed);
+    }
+
+}
+
+Car.prototype.moveForward = function(car){
+    car.gear = car.lookAt == 'right' ? -1 : 1;
+    //this.gear = -1;
+    car.startEngine();
+    // Apply motor movement of the wheels. Four-wheel drive
+    for (let i in car.wheels) {
+        var direction = car.wheels[i].GetTransform().R.col2.Copy();
+        direction.Multiply(car.speed);
+        car.wheels[i].ApplyForce(direction, car.wheels[i].GetPosition());
+    }
+}
+
+Car.prototype.moveBackward = function(car){
+    this.gear = this.lookAt == 'right' ? 1 : -1;
+    //this.gear = 1;
+    this.startEngine();
+   // Apply motor movement of the wheels. Four-wheel drive
+   for (let i in car.wheels) {
+    var direction = car.wheels[i].GetTransform().R.col2.Copy();
+    direction.Multiply(car.speed);
+    car.wheels[i].ApplyForce(direction, car.wheels[i].GetPosition());
+} 
 }
 
 Car.prototype.draw = function () {
