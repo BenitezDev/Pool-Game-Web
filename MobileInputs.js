@@ -109,7 +109,6 @@ MobileInputs.prototype.update = function(){
     if(currentScene ==PoolGame.scenes[scenesTAGs.GAME]){
         if(movingfLeft == true){
             currentScene.car.moveLeft(currentScene.car);
-            //console.log("BOROSA");
         }
         if(movingfRight == true){
             currentScene.car.moveRight(currentScene.car);

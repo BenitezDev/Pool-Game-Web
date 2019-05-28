@@ -153,52 +153,52 @@ Car.prototype.start = function () {
 Car.prototype.update = function () {
 
     // Calculate wheel rotation
-    let wheelRotationSpeed = 0.0;
-    let wheelAngle = 0.0;
+    // let wheelRotationSpeed = 0.0;
+    // let wheelAngle = 0.0;
 
-    if (input.isKeyPressed(this.KEY_LEFT)) {
-        wheelAngle += this.frontLeftWheel.joint.m_lowerAngle;
-        wheelRotationSpeed = this.wheelRotationSpeed;
-    }
-    if (input.isKeyPressed(this.KEY_RIGHT)) {
-        wheelAngle += this.frontLeftWheel.joint.m_upperAngle;
-        wheelRotationSpeed = this.wheelRotationSpeed;
-    }
+    // if (input.isKeyPressed(this.KEY_LEFT)) {
+    //     wheelAngle += this.frontLeftWheel.joint.m_lowerAngle;
+    //     wheelRotationSpeed = this.wheelRotationSpeed;
+    // }
+    // if (input.isKeyPressed(this.KEY_RIGHT)) {
+    //     wheelAngle += this.frontLeftWheel.joint.m_upperAngle;
+    //     wheelRotationSpeed = this.wheelRotationSpeed;
+    // }
 
-    if (!(input.isKeyPressed(this.KEY_LEFT) || input.isKeyPressed(this.KEY_RIGHT))) {
-        wheelAngle = 0.0;
-        wheelRotationSpeed = this.wheelRotationSpeed * this.wheelRelocationSpeed;
-    }
+    // if (!(input.isKeyPressed(this.KEY_LEFT) || input.isKeyPressed(this.KEY_RIGHT))) {
+    //     wheelAngle = 0.0;
+    //     wheelRotationSpeed = this.wheelRotationSpeed * this.wheelRelocationSpeed;
+    // }
 
-    // Apply rotation
-    for (let i in this.frontWheels) {
-        let wheelJoint = this.frontWheels[i].joint;
-        let angleDiff = wheelAngle - wheelJoint.GetJointAngle();
-        wheelJoint.SetMotorSpeed(angleDiff * wheelRotationSpeed);
-    }
+    // // Apply rotation
+    // for (let i in this.frontWheels) {
+    //     let wheelJoint = this.frontWheels[i].joint;
+    //     let angleDiff = wheelAngle - wheelJoint.GetJointAngle();
+    //     wheelJoint.SetMotorSpeed(angleDiff * wheelRotationSpeed);
+    // }
 
-    // Apply motor movement of the wheels. Four-wheel drive
-    for (let i in this.wheels) {
-        var direction = this.wheels[i].GetTransform().R.col2.Copy();
-        direction.Multiply(this.speed);
-        this.wheels[i].ApplyForce(direction, this.wheels[i].GetPosition());
-    }
+    // // Apply motor movement of the wheels. Four-wheel drive
+    // for (let i in this.wheels) {
+    //     var direction = this.wheels[i].GetTransform().R.col2.Copy();
+    //     direction.Multiply(this.speed);
+    //     this.wheels[i].ApplyForce(direction, this.wheels[i].GetPosition());
+    // }
 
-    // Calculate movement
-    if (!input.isKeyPressed(this.KEY_UP) || !input.isKeyPressed(this.KEY_DOWN)) {
-        this.stopEngine();
-    }
-    if (input.isKeyPressed(this.KEY_UP)) {
+    // // Calculate movement
+    // if (!input.isKeyPressed(this.KEY_UP) || !input.isKeyPressed(this.KEY_DOWN)) {
+    //     this.stopEngine();
+    // }
+    // if (input.isKeyPressed(this.KEY_UP)) {
 
-        this.gear = this.lookAt == 'right' ? -1 : 1;
-        //this.gear = -1;
-        this.startEngine();
-    }
-    else if (input.isKeyPressed(this.KEY_DOWN)) {
-        this.gear = this.lookAt == 'right' ? 1 : -1;
-        //this.gear = 1;
-        this.startEngine();
-    }
+    //     this.gear = this.lookAt == 'right' ? -1 : 1;
+    //     //this.gear = -1;
+    //     this.startEngine();
+    // }
+    // else if (input.isKeyPressed(this.KEY_DOWN)) {
+    //     this.gear = this.lookAt == 'right' ? 1 : -1;
+    //     //this.gear = 1;
+    //     this.startEngine();
+    // }
 
 }
 
