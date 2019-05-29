@@ -44,7 +44,10 @@ Button.prototype.start = function () {
 
 Button.prototype.update = function () {
 
-    if (PointInsideRectangle(input.mouse, this.rectangle) && input.mouse.pressed) {
+    if ( 
+        PointInsideRectangle(input.tap, this.rectangle) /*&& input.tap.pressed*/|| 
+        (PointInsideRectangle(input.mouse, this.rectangle) && input.mouse.pressed)
+     ) {
 
         console.log("Click on button");
         this.onclick(this.aux);

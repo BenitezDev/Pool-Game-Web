@@ -79,6 +79,7 @@ function loadAssets(callback) {
     sprites.start_game = loadSprite('start_game.png');
     sprites.options = loadSprite('options.png');
     sprites.menu_background = loadSprite('menu_background.png');
+    sprites.win_scene = loadSprite('win_screen.png');
 
     // Audio
     audio.main_Theme = loadAudio('main_theme.mp3', 0.5);

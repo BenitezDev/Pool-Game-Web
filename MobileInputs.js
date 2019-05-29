@@ -22,13 +22,22 @@ function holdit(btn, action, start, speedup) {
 };
 
 /////////////////////////////////////////////////////////////////
-let movingfLeft = false;
-let movingfRight = false;
-let movingForware = false;
-let movingBackwards = false;
+
+// Player 1
+let movingfLeft1 = false;
+let movingfRight1 = false;
+let movingForware1 = false;
+let movingBackwards1 = false;
+
+// Player 2
+let movingfLeft2 = false;
+let movingfRight2 = false;
+let movingForware2 = false;
+let movingBackwards2 = false;
 
 function MobileInputs(){
     
+    // Player 1
     this.l1 = document.getElementById('L1');
     this.L1 = new Hammer.Manager(this.l1);
     this.L1.add(new Hammer.Press({
@@ -65,6 +74,44 @@ function MobileInputs(){
         time: 1,
     }));
 
+    // Player 2
+    this.l2 = document.getElementById('L2');
+    this.L2 = new Hammer.Manager(this.l2);
+    this.L2.add(new Hammer.Press({
+        event: 'press',
+        pointer: 1,
+        threshold: 1000,
+        time: 1,
+    }));
+
+    this.r2 = document.getElementById('R2');
+    this.R2 = new Hammer.Manager(this.r2);
+    this.R2.add(new Hammer.Press({
+        event: 'press',
+        pointer: 1,
+        threshold: 1000,
+        time: 1,
+    }));
+
+    this.f2 = document.getElementById('F2');
+    this.F2 = new Hammer.Manager(this.f2);
+    this.F2.add(new Hammer.Press({
+        event: 'press',
+        pointer: 1,
+        threshold: 1000,
+        time: 1,
+    }));
+
+    this.b2 = document.getElementById('B2');
+    this.B2 = new Hammer.Manager(this.b2);
+    this.B2.add(new Hammer.Press({
+        event: 'press',
+        pointer: 1,
+        threshold: 1000,
+        time: 1,
+    }));
+
+
 
     this.start();
 }
@@ -72,33 +119,63 @@ function MobileInputs(){
 
 MobileInputs.prototype.start = function (){
 
+    // Player 1
     this.L1.on("press", function (ev) {
-           movingfLeft = true;
+           movingfLeft1 = true;
     });
     this.L1.on("pressup",function (ev) {
-        movingfLeft = false;
+        movingfLeft1 = false;
     });
 
     this.R1.on("press", function (ev) {
-        movingfRight = true;
+        movingfRight1 = true;
     });
     this.R1.on("pressup",function (ev) {
-        movingfRight = false;
+        movingfRight1 = false;
     });
 
     this.F1.on("press", function (ev) {
-        movingForware = true;
+        movingForware1 = true;
     });
     this.F1.on("pressup",function (ev) {
-        movingForware = false;
+        movingForware1 = false;
     });
     
     this.B1.on("press", function (ev) {
-        movingBackwards = true;
+        movingBackwards1 = true;
     });
     this.B1.on("pressup",function (ev) {
-        movingBackwards = false;
+        movingBackwards1 = false;
     });
+
+    // Player 2
+    this.L2.on("press", function (ev) {
+        movingfLeft2 = true;
+    });
+    this.L2.on("pressup",function (ev) {
+        movingfLeft2 = false;
+    });
+
+    this.R2.on("press", function (ev) {
+        movingfRight2 = true;
+    });
+    this.R2.on("pressup",function (ev) {
+        movingfRight2 = false;
+    });
+
+    this.F2.on("press", function (ev) {
+        movingForware2 = true;
+    });
+    this.F2.on("pressup",function (ev) {
+        movingForware2 = false;
+    });
+    
+    this.B2.on("press", function (ev) {
+        movingBackwards2 = true;
+    });
+    this.B2.on("pressup",function (ev) {
+        movingBackwards2 = false;
+ });
 
 }
 
@@ -107,7 +184,7 @@ MobileInputs.prototype.update = function(){
     
     // Game Scene
     if(currentScene ==PoolGame.scenes[scenesTAGs.GAME]){
-        // if(movingfLeft == true){
+        // if(movingfLeft1 == true){
         //     currentScene.car.moveLeft(currentScene.car);
         // }
         // if(movingfRight == true){
@@ -120,14 +197,21 @@ MobileInputs.prototype.update = function(){
         //     currentScene.car.moveBackward(currentScene.car);
         // }
 
-        if(!movingfLeft && !movingfRight){
+        if(!movingfLeft1 && !movingfRight1){
             currentScene.car.stopEngine();
         }
-        currentScene.car.pressingForward = movingForware;
-        currentScene.car.pressingBackward = movingBackwards;
-        currentScene.car.pressingLeft = movingfLeft;
-        currentScene.car.pressingRight = movingfRight;
+        currentScene.car.pressingForward = movingForware1;
+        currentScene.car.pressingBackward = movingBackwards1;
+        currentScene.car.pressingLeft = movingfLeft1;
+        currentScene.car.pressingRight = movingfRight1;
 
+        if(!movingfLeft2 && !movingfRight2){
+            currentScene.car.stopEngine();
+        }
+        currentScene.car2.pressingForward = movingForware2;
+        currentScene.car2.pressingBackward = movingBackwards2;
+        currentScene.car2.pressingLeft = movingfLeft2;
+        currentScene.car2.pressingRight = movingfRight2;
 
     }
     

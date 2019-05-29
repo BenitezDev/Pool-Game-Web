@@ -36,9 +36,9 @@ ScoreManager.prototype.start = function () {
     this.winPopUp = new OptionsMenu(
         false,
         Canvas.centerPoint,
-        sprites.menu_background,
-        sprites.menu_background.width,
-        sprites.menu_background.height,
+        sprites.win_scene,
+        sprites.win_scene.width,
+        sprites.win_scene.height,
         1);
 
 

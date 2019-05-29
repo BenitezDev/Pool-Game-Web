@@ -54,4 +54,9 @@ Canvas2D.prototype.drawDebugPoint = function(pos, radius){
   this._ctx.restore();
 }
 
+Canvas2D.prototype.semiTrasparentRect = function(){
+  this._ctx.fillStyle = "rgba(0,0,0,0.6)";
+  this._ctx.fillRect(0,0,this._canvas.width, this._canvas.height);
+}
+
 let Canvas = new Canvas2D();

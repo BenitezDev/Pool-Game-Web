@@ -56,10 +56,13 @@ MenuScene.prototype.start = function () {
 
 MenuScene.prototype.update = function () {
 
-    this.menuOptions.update();
+   
     
     this.optionsButton.update();
     this.startButton.update();
+    // Need to check because when the scene is unload, it can perform this.menuOptions.update();
+    if(this.menuOptions != null)
+        this.menuOptions.update();
     
 };
 

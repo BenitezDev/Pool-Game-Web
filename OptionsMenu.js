@@ -22,8 +22,8 @@ function OptionsMenu(active, position, img, width, height, scale) {
 
     this.rectangle = {
         position: new Vector2(this.position.x - this.halfWidth, this.position.y - this.halfHeight),
-        width: this.width,
-        height: this.height
+        width: Canvas._canvas.width,
+        height: Canvas._canvas.height
     }
 
     // if (!aux) aux = "hola mundo";
@@ -44,8 +44,9 @@ OptionsMenu.prototype.start = function () {
 
 OptionsMenu.prototype.update = function () {
 
-    if (this.active && input.isKeyDown(KEY_SCAPE)) {
-        this.hide();
+    if (this.active && /*input.isKeyDown(KEY_SCAPE)*/input.tap.pressed) {
+        //this.hide();
+        PoolGame.ChangeSceneTo(scenesTAGs.GAME);
     }
 
 }

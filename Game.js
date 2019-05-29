@@ -88,7 +88,7 @@ Game.prototype.mainLoop = function () {
     if (input.isKeyPressed(KEY_2)) PoolGame.ChangeSceneTo(scenesTAGs.GAME);
 
     // Debug
-    if (PoolGame.world) PoolGame.world.DrawDebugData(); // Visual Debug Physics
+    //if (PoolGame.world) PoolGame.world.DrawDebugData(); // Visual Debug Physics
     PoolGame.fpsManager.draw('pink'); // FPS Stats
 
     PoolGame.postUpdate();

@@ -7,31 +7,37 @@
 
 #buttonsLeft{
   
-position: absolute;
-top: 20%;
-left: 0;
+    position: absolute;
+    top: 11%;
+    left: 0;
   
 }
 #buttonsRight{  
     position: absolute;
-    top: 20%;
+    top: 11%;
     right: 0;
     
 }
 
 .ButtonGroup > div {
     width: 50px;
-    height: 20px;
+    height: 50px;
+    background-repeat: no-repeat;
     line-height: 20px;
-    background-image: url("./assets/sprites/flecha_izq.png");
+    background-image: url("./assets/sprites/arrow.png");
     overflow: hidden;
     cursor: pointer;
 }
 
-#L1{
-    transform: rotate(90deg);
+#F1, #B2{
+   transform: rotate(90deg);
 }
-
+#R1 , #L2{
+    transform: rotate(180deg);
+}
+#B1 , #F2{
+    transform: rotate(270deg);
+}
 
 
 

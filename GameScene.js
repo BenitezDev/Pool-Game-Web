@@ -66,18 +66,6 @@ GameScene.prototype.start = function () {
   this.scores.push(this.score1);
   this.scores.push(this.score2);
 
-  // botones tactiles:
-
-  this.leftPlayer1 = new Button(
-    {x:150,y:150},
-    sprites.left_arrow,
-    sprites.left_arrow.width,
-    sprites.left_arrow.height,
-    1,
-    this.car.moveLeft,
-    this.car
-  );
-
   // Timer
   //pos, size, maxSeconds, color
   this.timer = new Timer(new Vector2(550,480), '45px', 61, 'white');
@@ -100,7 +88,7 @@ GameScene.prototype.start = function () {
         PoolGame.ChangeSceneTo,
         scenesTAGs.INTRO
       ),
-      backgroundImg : sprites.menu_background,
+      backgroundImg : sprites.win_scene,
 
       // enable: function(){
       //     if(this.score1.)
@@ -112,14 +100,19 @@ GameScene.prototype.start = function () {
 
       draw : function (){
         if(this.active){
+         
+          Canvas.semiTrasparentRect();
+          
           Canvas.drawImage(this.backgroundImg, Canvas.centerPoint,0,1,new Vector2(this.backgroundImg.width/2, this.backgroundImg.height/2 ));
           
           // text, position, fontsize, color
           Canvas.drawText(this.winner, this.winnerPos, '30px', 'yellow');
           Canvas.drawText(this.winnerSecondLine, this.winnerPosSecondLine, '30px', 'yellow');
-
+          
           this.mainMenuButton.draw();
+          
         }
+        
       }
   }
 }
@@ -138,10 +131,6 @@ GameScene.prototype.update = function () {
 
 
   //this.scores.forEach(score => score.update());
-
- 
-
-  this.leftPlayer1.update();
 
   this.finalScreen.update();
 
@@ -177,9 +166,6 @@ GameScene.prototype.draw = function () {
     score.draw();
 
   });
-
-  this.leftPlayer1.draw();
-  Canvas.drawDebugPoint(  {x:150,y:150}, 5);
 
   this.finalScreen.draw();
 
