@@ -40,5 +40,12 @@
     transform: rotate(270deg);
 }
 
+/* Only in browser */
+.ButtonGroup{
+    display: none;
+}
 
-
+/* Remove scroll */
+html { 
+    overflow-y: hidden; 
+}
