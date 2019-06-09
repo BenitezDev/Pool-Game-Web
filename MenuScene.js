@@ -9,18 +9,21 @@ function MenuScene() {
     this.startButton = null;
     this.optionsButton = null;
     this.menuOptions = null;
+    this.background = null;
 
 }
 
 MenuScene.prototype.start = function () {
 
+    this.background = sprites.rocket_pool;
+
     this.menuOptions =
         new OptionsMenu(
             false,
             Canvas.centerPoint,
-            sprites.menu_background,
-            sprites.menu_background.width,
-            sprites.menu_background.height,
+            sprites.controles,
+            sprites.controles.width,
+            sprites.controles.height,
             1
         );
     this.f = this.menuOptions.show;
@@ -49,6 +52,7 @@ MenuScene.prototype.start = function () {
         );
 
 
+
     console.log(this.menuOptions.show)
 
 
@@ -56,18 +60,21 @@ MenuScene.prototype.start = function () {
 
 MenuScene.prototype.update = function () {
 
-   
-    
+
+
     this.optionsButton.update();
     this.startButton.update();
     // Need to check because when the scene is unload, it can perform this.menuOptions.update();
-    if(this.menuOptions != null)
+    if (this.menuOptions != null)
         this.menuOptions.update();
-    
+
+
 };
 
 
 MenuScene.prototype.draw = function () {
+
+    Canvas.drawImageFill(this.background);
 
     this.startButton.draw();
     this.optionsButton.draw();
@@ -92,5 +99,7 @@ MenuScene.prototype.unloadScene = function () {
 
     this.optionsButton = null;
     this.menuOptions = null;
+    this.background = null;
 
 }
+

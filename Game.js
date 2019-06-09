@@ -76,7 +76,7 @@ Game.prototype.mainLoop = function () {
 
     input.update();
 
-   
+
 
     // Current Scene
     currentScene.update();
@@ -89,7 +89,7 @@ Game.prototype.mainLoop = function () {
 
     // Debug
     //if (PoolGame.world) PoolGame.world.DrawDebugData(); // Visual Debug Physics
-    PoolGame.fpsManager.draw('pink'); // FPS Stats
+    //PoolGame.fpsManager.draw('pink'); // FPS Stats
 
     PoolGame.postUpdate();
 
@@ -146,5 +146,5 @@ Game.prototype.ChangeSceneTo = function (newScene) {
 
 Game.prototype.PrepareAudioManager = function () {
     audioManager = new AudioManager();
-    //audioManager.playBackgroundMusic(PoolGame.backgroundAudio, true);
+    audioManager.playBackgroundMusic(PoolGame.backgroundAudio, true);
 }

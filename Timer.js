@@ -1,7 +1,7 @@
 
 
 
-function Timer(pos, size, maxSeconds, color){
+function Timer(pos, size, maxSeconds, color) {
     this.pos = pos;
     this.size = size;
     this.currentTime = maxSeconds;
@@ -12,35 +12,34 @@ function Timer(pos, size, maxSeconds, color){
 
 
 
-Timer.prototype.start = function(){
+Timer.prototype.start = function () {
 
 }
 
-Timer.prototype.update = function(){
+Timer.prototype.update = function () {
     this.currentTime -= deltatimeSeconds;
-    if(this.currentTime <= 0) 
-    {
-        audioManager.playFx(audio.pitido_futbol,1);
+    if (this.currentTime <= 0) {
+        audioManager.playFx(audio.pitido_futbol, 1);
         //alert("lololo");
 
-        if(currentScene == PoolGame.scenes[scenesTAGs.GAME]){
+        if (currentScene == PoolGame.scenes[scenesTAGs.GAME]) {
             currentScene.finalScreen.winner = 'Time out!';
             currentScene.finalScreen.active = true;
 
-            
-            if(currentScene.score1.currentPoints > currentScene.score2.currentPoints){
+
+            if (currentScene.score1.currentPoints > currentScene.score2.currentPoints) {
                 currentScene.finalScreen.winnerSecondLine = ' Player1 wins!';
-            }else if(currentScene.score2.currentPoints > currentScene.score1.currentPoints){
+            } else if (currentScene.score2.currentPoints > currentScene.score1.currentPoints) {
                 currentScene.finalScreen.winnerSecondLine = ' Player2 wins!';
             }
-            else{
+            else {
                 currentScene.finalScreen.winnerSecondLine = ' No winners'
             }
         }
-        
+
     }
 }
 
-Timer.prototype.draw = function(){
-    Canvas.drawText(Math.trunc(this.currentTime),this.pos,this.size,this.color)
+Timer.prototype.draw = function () {
+    Canvas.drawText(Math.trunc(this.currentTime), this.pos, this.size, this.color)
 }

@@ -14,6 +14,7 @@ function GameScene() {
 
   this.finalScreen = null;
 
+
 }
 
 GameScene.prototype.start = function () {
@@ -50,12 +51,12 @@ GameScene.prototype.start = function () {
   this.ballPools.forEach(ball => { ball.collider.SetUserData(ball); });
 
   // Create the holes
-  this.holes.push(new Hole({ x: 40, y: 40 }, 30));
-  this.holes.push(new Hole({ x: 400, y: 37 }, 30));
-  this.holes.push(new Hole({ x: 765, y: 45 }, 30));
-  this.holes.push(new Hole({ x: 40, y: 440 }, 30));
-  this.holes.push(new Hole({ x: 400, y: 447 }, 30));
-  this.holes.push(new Hole({ x: 763, y: 437 }, 30));
+  this.holes.push(new Hole({ x: 40, y: 40 }, 40));
+  this.holes.push(new Hole({ x: 400, y: 33 }, 40));
+  this.holes.push(new Hole({ x: 765, y: 45 }, 40));
+  this.holes.push(new Hole({ x: 40, y: 440 }, 40));
+  this.holes.push(new Hole({ x: 400, y: 447 }, 40));
+  this.holes.push(new Hole({ x: 763, y: 437 }, 40));
 
   this.ballsToWin = 5;
 
@@ -68,52 +69,54 @@ GameScene.prototype.start = function () {
 
   // Timer
   //pos, size, maxSeconds, color
-  this.timer = new Timer(new Vector2(550,480), '45px', 61, 'white');
+  this.timer = new Timer(new Vector2(550, 480), '45px', 61, 'white');
 
 
   // Final Screen
   this.finalScreen = {
-      active: false,
-      winner : '',
-      winnerSecondLine : '',
-      winnerPos : new Vector2(200, Canvas.centerPoint.y - 120),
-      winnerPosSecondLine : new Vector2(200, Canvas.centerPoint.y - 90),
-      //position, img, width, height, scale, onclick, aux, rotation
-      mainMenuButton : new Button(
-        {x:480,y:380},
-        sprites.start_game,
-        sprites.start_game.width,
-        sprites.start_game.height,
-        1,
-        PoolGame.ChangeSceneTo,
-        scenesTAGs.INTRO
-      ),
-      backgroundImg : sprites.win_scene,
+    active: false,
+    winner: '',
+    winnerSecondLine: '',
+    winnerPos: new Vector2(180, Canvas.centerPoint.y),
+    winnerPosSecondLine: new Vector2(400, Canvas.centerPoint.y),
+    //position, img, width, height, scale, onclick, aux, rotation
+    mainMenuButton: new Button(
+      { x: 400, y: 400 },
+      sprites.start_game,
+      sprites.start_game.width,
+      sprites.start_game.height,
+      1,
+      PoolGame.ChangeSceneTo,
+      scenesTAGs.INTRO
+    ),
+    backgroundImg: sprites.end_game,
 
-      // enable: function(){
-      //     if(this.score1.)
-      // },
-      update : function(){
-        if(this.active)
+    // enable: function(){
+    //     if(this.score1.)
+    // },
+    update: function () {
+      if (this.active)
         this.mainMenuButton.update();
-      },
+    },
 
-      draw : function (){
-        if(this.active){
-         
-          Canvas.semiTrasparentRect();
-          
-          Canvas.drawImage(this.backgroundImg, Canvas.centerPoint,0,1,new Vector2(this.backgroundImg.width/2, this.backgroundImg.height/2 ));
-          
-          // text, position, fontsize, color
-          Canvas.drawText(this.winner, this.winnerPos, '30px', 'yellow');
-          Canvas.drawText(this.winnerSecondLine, this.winnerPosSecondLine, '30px', 'yellow');
-          
-          this.mainMenuButton.draw();
-          
-        }
-        
+    draw: function () {
+      if (this.active) {
+
+        Canvas.semiTrasparentRect();
+        Canvas._ctx.globalAlpha = 0.3;
+        Canvas.drawImageFill(this.backgroundImg);
+        Canvas._ctx.globalAlpha = 1;
+        //Canvas.drawImage(this.backgroundImg, Canvas.centerPoint, 0, 1, new Vector2(this.backgroundImg.width / 2, this.backgroundImg.height / 2));
+
+        // text, position, fontsize, color
+        Canvas.drawText(this.winner, this.winnerPos, '30px', 'yellow');
+        Canvas.drawText(this.winnerSecondLine, this.winnerPosSecondLine, '30px', 'yellow');
+
+        this.mainMenuButton.draw();
+
       }
+
+    }
   }
 }
 
@@ -135,8 +138,7 @@ GameScene.prototype.update = function () {
   this.finalScreen.update();
 
   // Stop Countdown if there is a winner
-  if(!this.finalScreen.active)
-  {
+  if (!this.finalScreen.active) {
     this.timer.update();
   }
 
@@ -156,7 +158,7 @@ GameScene.prototype.draw = function () {
   this.ballPools.forEach(ball => ball.draw());
 
   // 4º Holes Debug
-  this.holes.forEach(hole => hole.draw());
+  //this.holes.forEach(hole => hole.draw());
 
   // 5º Draw Score
   // Player 1
@@ -170,6 +172,7 @@ GameScene.prototype.draw = function () {
   this.finalScreen.draw();
 
   this.timer.draw();
+
 };
 
 
@@ -341,17 +344,17 @@ GameScene.prototype.instantiateBallsInCircle = function () {
 }
 
 
-GameScene.prototype.checkEndGame = function(){
+GameScene.prototype.checkEndGame = function () {
 
-  if(this.score1.currentPoints >= this.ballsToWin){
+  if (this.score1.currentPoints >= this.ballsToWin) {
     this.finalScreen.winner = 'Player 1 wins!';
     this.finalScreen.active = true;
-  } 
-  else if(this.score2.currentPoints >= this.ballsToWin){
+  }
+  else if (this.score2.currentPoints >= this.ballsToWin) {
     this.finalScreen.winner = 'Player 2 wins!';
     this.finalScreen.active = true;
   }
-  
+
 }
 
 
