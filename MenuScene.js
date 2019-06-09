@@ -1,7 +1,10 @@
-// contain all objects of the game, in each frame update and draw them on canvas
-
-
-
+//
+// Author: Alejandro Benítez López
+//
+// © benitezdev 2019 (benitezdev.com)
+// Creative Commons License:
+// Attribution 4.0 International (CC BY 4.0)
+//
 
 
 function MenuScene() {
@@ -26,7 +29,7 @@ MenuScene.prototype.start = function () {
             sprites.controles.height,
             1
         );
-    this.f = this.menuOptions.show;
+
 
     this.startButton =
         new Button(
@@ -51,19 +54,13 @@ MenuScene.prototype.start = function () {
             this.menuOptions
         );
 
-
-
-    console.log(this.menuOptions.show)
-
-
 }
 
 MenuScene.prototype.update = function () {
 
-
-
     this.optionsButton.update();
     this.startButton.update();
+
     // Need to check because when the scene is unload, it can perform this.menuOptions.update();
     if (this.menuOptions != null)
         this.menuOptions.update();
@@ -84,16 +81,19 @@ MenuScene.prototype.draw = function () {
 };
 
 MenuScene.prototype.activeElement = function (element) {
+
     element.show();
+
 }
 MenuScene.prototype.desactiveElement = function (element) {
-    element.hide();
-}
 
+    element.hide();
+
+}
 
 MenuScene.prototype.unloadScene = function () {
 
-    this.startButtonFunction = function () { };
+    this.startButtonFunction = null;
     this.startButton = null;
 
 

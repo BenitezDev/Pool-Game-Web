@@ -1,10 +1,19 @@
+//
+// Author: Alejandro Benítez López
+//
+// © benitezdev 2019 (benitezdev.com)
+// Creative Commons License:
+// Attribution 4.0 International (CC BY 4.0)
+//
 
 
-// Load all the assets before starting starting the game
+// Load all assets before starting the game
+
 
 var sprites = {};
 var audio = {};
 var assetsStillLoading = 0;
+
 
 function assetsLoadingLoop(callback) {
 
@@ -16,6 +25,7 @@ function assetsLoadingLoop(callback) {
     }
 
 }
+
 
 function loadAssets(callback) {
 
@@ -47,9 +57,12 @@ function loadAssets(callback) {
         }
 
         return audio;
+
     }
 
-    // Sprites
+
+
+    // Sprites to load:
     sprites.rocket_pool = loadSprite('rocket_pool.png');
     sprites.background = loadSprite('background.png');
     sprites.controles = loadSprite('controles.png');
@@ -72,7 +85,7 @@ function loadAssets(callback) {
     sprites.win_scene = loadSprite('win_screen.png');
     sprites.end_game = loadSprite('game_over.png');
 
-    // Audio
+    // Audios to load:
     audio.main_Theme = loadAudio('main_theme.mp3', 0.3);
     audio.hit = loadAudio('hit.wav', 1);
     audio.balls_collide = loadAudio('balls_collide.wav', 1);
